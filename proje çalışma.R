@@ -149,5 +149,57 @@ sum(is.na(data_new$GECEN_SURE))
 
 str(data_new)
 
+library(dplyr)
+
+class(counts)
+
+
+count_sorted <- counts %>%
+  arrange(desc(count))
+top_10_accidents <- head(count_sorted, 10)             
+print(top_10_accidents)
+
+
+
+library(lubridate)
+
+
+data_2023 <- data_new %>%
+  mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d")) %>%  # yyyy-aa-gg formatında tarih dönüşümü
+  filter(year(TARIH) == 2023)
+
+grouped_data <- data_2023 %>%
+  group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
+  summarise("Total Number of Accidents" = n())
+
+top_10_accidents <- grouped_data %>%
+  arrange(desc("Total Number of Accidents")) %>%
+  head(top_10_accidents,10)
+
+
+#bunu kullan
+
+data_2023 <- data_2023 %>%
+  mutate(ISTIKAMET_SAYISI = as.numeric(factor(ISTIKAMET)))
+grouped_data_2 <- data_2023 %>%
+  group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
+  summarise(Total_Accidents = n())
+sorted_grouped_data <- grouped_data_2 %>%
+  arrange(desc(Total_Accidents))
+
+top_10_destination <- sorted_grouped_data %>%
+  head(10)
+
+print(top_10_destination)
+
+library(ggplot2)
+
+
+ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Total_Accidents)) +
+  geom_bar(stat = "identity", fill = "purple", color = "black") +
+  coord_flip() +  
+  labs(title = "Distribution of Accidents According to Directions (2023)", x = "Destination", y = "Frequency") +
+  theme_minimal()
+
 
 
