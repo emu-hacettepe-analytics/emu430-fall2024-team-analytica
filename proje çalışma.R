@@ -203,3 +203,101 @@ ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Tot
 
 
 
+library(dplyr)
+accidents_date <- data_2023 %>%
+  group_by(TARIH) %>%  # TARIH sütununa göre gruplama
+  summarise(Accident_Number = n())
+accidents_date
+
+sorted_accidents_date <-accidents_date %>%
+  arrange(desc(Accident_Number))
+
+head(sorted_accidents_date,10)
+
+library(ggplot2)
+
+ggplot(accidents_date, aes(x = TARIH, y = Accident_Number)) +
+  geom_line(color = "blue", size = 1) +  # Çizgi grafiği
+  geom_point(color = "pink", size = 2) +  # Veri noktalarını ekleme
+  labs(title = "Number of Accidents by Date (2023)", x = "Date", y = "Number of Accidents") +
+  theme_minimal()
+
+ library(dplyr)
+most_accidents_date <- accidents_date %>%
+  filter(Accident_Number == max(Accident_Number)) %>%  # En çok kaza yapılan tarih(ler)
+  pull(TARIH)
+
+destination_accidents <- data_2023 %>%
+  filter(TARIH %in% most_accidents_date) %>%  # En çok kaza yapılan tarihleri seç
+  group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
+  summarise(Accident_Number = n()) %>%  # Her istikamet için kaza sayısını hesaplama
+  arrange(desc(Accident_Number)) 
+destination_accidents
+
+library(ggplot2)
+
+ggplot(destination_accidents, aes(x = reorder(ISTIKAMET, Accident_Number), y = Accident_Number)) +
+  geom_bar(stat = "identity", fill = "brown", color = "black") +
+  labs(title = "Accidents According to Directions on the Dates with the Most Accidents", x = "Destination", y = "Number of Accidents") +
+  theme_minimal()
+
+
+library(dplyr)
+top_5_most_accident_dates <- accidents_date %>%
+  arrange(desc(Accident_Number)) %>%  # Kaza sayılarına göre sıralama
+  slice(1:5) %>%  # İlk 5 satırı seçme
+  pull(TARIH)
+
+destination_accidents_top_5 <- data_2023 %>%
+  filter(TARIH %in% top_5_most_accident_dates) %>%  # İlk 5 tarihi seçme
+  group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
+  summarise(Accident_Number = n()) %>%  # Her istikamet için kaza sayısını hesaplama
+  arrange(desc(Accident_Number))
+
+library(dplyr)
+
+# En çok kaza yapılan 5 tarihi bulma
+top_5_most_accident_dates <- accidents_date %>%
+  arrange(desc(Accident_Number)) %>%  # Kaza sayılarına göre sıralama
+  slice(1:5) %>%  # İlk 5 satırı seçme
+  pull(TARIH)
+
+# En çok kaza yapılan 5 tarihteki kazaları tarihe ve istikamete göre gruplama
+accidents_date_destination <- data_2023 %>%
+  filter(TARIH %in% top_5_most_accident_dates) %>%  # İlk 5 tarihi seçme
+  group_by(TARIH, ISTIKAMET) %>%  # Tarihe ve istikamete göre gruplama
+  summarise(Accident_Number = n()) %>%  # Her grup için kaza sayısını hesaplama
+  arrange(TARIH, desc(Accident_Number))  # Tarih ve kaza sayısına göre sıralama
+
+# Sonuçları görüntüleme
+accidents_date_destination
+
+date_list <- accidents_date_destination %>%
+  group_split(TARIH) #bu çalışmadı
+
+# İlk tabloyu görüntüleme
+date_list[[1]]
+
+for (i in seq_along(date_list)) {
+  cat("Tarih:", unique(date_list[[i]]$TARIH), "\n")
+  print(date_list[[i]])
+  cat("\n")
+}
+
+#bunu kesin kullan ---
+install.packages("DT")
+library(DT)
+
+# Her tarih için etkileşimli tabloyu görüntüleme
+for (i in seq_along(date_list)) {
+  cat("Tarih:", unique(date_list[[i]]$TARIH), "\n")
+  datatable(date_list[[i]], options = list(pageLength = 5, scrollX = TRUE))
+}
+
+dates_together <- bind_rows(date_list)
+
+# Tabloyu görüntüleme bu süper bi şey oldu
+datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
+
+#---
+
