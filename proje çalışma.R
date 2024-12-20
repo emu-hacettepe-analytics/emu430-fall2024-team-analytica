@@ -149,11 +149,14 @@ sum(is.na(data_new$GECEN_SURE))
 
 str(data_new)
 
+
+#burdan itibaren benim
+
 library(dplyr)
 
 class(counts)
 
-
+#en yüksek kaza sayılı istikametler
 count_sorted <- counts %>%
   arrange(desc(count))
 top_10_accidents <- head(count_sorted, 10)             
@@ -163,15 +166,17 @@ print(top_10_accidents)
 
 library(lubridate)
 
-
+#2023 yılına göre filtreleme
 data_2023 <- data_new %>%
   mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d")) %>%  # yyyy-aa-gg formatında tarih dönüşümü
   filter(year(TARIH) == 2023)
 
+#istikamete göre gruplandırma
 grouped_data <- data_2023 %>%
   group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
   summarise("Total Number of Accidents" = n())
 
+#en yüksek sayılı 10 istikamet
 top_10_accidents <- grouped_data %>%
   arrange(desc("Total Number of Accidents")) %>%
   head(top_10_accidents,10)
@@ -192,8 +197,9 @@ top_10_destination <- sorted_grouped_data %>%
 
 print(top_10_destination)
 
-library(ggplot2)
 
+#İstikamete göre kaza dağılımları bar plot
+library(ggplot2)
 
 ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Total_Accidents)) +
   geom_bar(stat = "identity", fill = "purple", color = "black") +
@@ -202,7 +208,7 @@ ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Tot
   theme_minimal()
 
 
-
+#hangi tarihte kaç kaza olmuş
 library(dplyr)
 accidents_date <- data_2023 %>%
   group_by(TARIH) %>%  # TARIH sütununa göre gruplama
@@ -214,6 +220,7 @@ sorted_accidents_date <-accidents_date %>%
 
 head(sorted_accidents_date,10)
 
+#Günlük toplam kaza sayısını gösteren line plot
 library(ggplot2)
 
 ggplot(accidents_date, aes(x = TARIH, y = Accident_Number)) +
@@ -222,11 +229,13 @@ ggplot(accidents_date, aes(x = TARIH, y = Accident_Number)) +
   labs(title = "Number of Accidents by Date (2023)", x = "Date", y = "Number of Accidents") +
   theme_minimal()
 
+#En çok kaza yapılan tarih
  library(dplyr)
 most_accidents_date <- accidents_date %>%
   filter(Accident_Number == max(Accident_Number)) %>%  # En çok kaza yapılan tarih(ler)
   pull(TARIH)
 
+#En çok kaza yapıln gün ilçelere göre dağılım
 destination_accidents <- data_2023 %>%
   filter(TARIH %in% most_accidents_date) %>%  # En çok kaza yapılan tarihleri seç
   group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
@@ -234,6 +243,7 @@ destination_accidents <- data_2023 %>%
   arrange(desc(Accident_Number)) 
 destination_accidents
 
+#en çok kaza yapılan gün ilçelere göre bar plot
 library(ggplot2)
 
 ggplot(destination_accidents, aes(x = reorder(ISTIKAMET, Accident_Number), y = Accident_Number)) +
@@ -241,26 +251,21 @@ ggplot(destination_accidents, aes(x = reorder(ISTIKAMET, Accident_Number), y = A
   labs(title = "Accidents According to Directions on the Dates with the Most Accidents", x = "Destination", y = "Number of Accidents") +
   theme_minimal()
 
-
+#en çok kaza yapılan beş gün
 library(dplyr)
 top_5_most_accident_dates <- accidents_date %>%
   arrange(desc(Accident_Number)) %>%  # Kaza sayılarına göre sıralama
   slice(1:5) %>%  # İlk 5 satırı seçme
   pull(TARIH)
+top_5_most_accident_dates
 
+#en çok kaza yapılan beş günün istikamete göre dağılımı
 destination_accidents_top_5 <- data_2023 %>%
   filter(TARIH %in% top_5_most_accident_dates) %>%  # İlk 5 tarihi seçme
   group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
   summarise(Accident_Number = n()) %>%  # Her istikamet için kaza sayısını hesaplama
   arrange(desc(Accident_Number))
 
-library(dplyr)
-
-# En çok kaza yapılan 5 tarihi bulma
-top_5_most_accident_dates <- accidents_date %>%
-  arrange(desc(Accident_Number)) %>%  # Kaza sayılarına göre sıralama
-  slice(1:5) %>%  # İlk 5 satırı seçme
-  pull(TARIH)
 
 # En çok kaza yapılan 5 tarihteki kazaları tarihe ve istikamete göre gruplama
 accidents_date_destination <- data_2023 %>%
@@ -268,16 +273,17 @@ accidents_date_destination <- data_2023 %>%
   group_by(TARIH, ISTIKAMET) %>%  # Tarihe ve istikamete göre gruplama
   summarise(Accident_Number = n()) %>%  # Her grup için kaza sayısını hesaplama
   arrange(TARIH, desc(Accident_Number))  # Tarih ve kaza sayısına göre sıralama
-
 # Sonuçları görüntüleme
 accidents_date_destination
 
+#ilk beş tarihi tablo olarak ayırıyor istikamete göre
 date_list <- accidents_date_destination %>%
-  group_split(TARIH) #bu çalışmadı
-
+  group_split(TARIH)
+date_list 
 # İlk tabloyu görüntüleme
 date_list[[1]]
 
+#üsttekiyle aynı
 for (i in seq_along(date_list)) {
   cat("Tarih:", unique(date_list[[i]]$TARIH), "\n")
   print(date_list[[i]])
