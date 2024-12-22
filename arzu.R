@@ -39,7 +39,7 @@ monthly_data <- data.frame(month = months, Total = total_values)
 install.packages("ggplot2")
 library(ggplot2)
 ggplot(monthly_data, aes(x = factor(month), y =Total)) +
-  geom_bar(stat = "identity",width = 0.7, fill = "green") +
+  geom_bar(stat = "identity",width = 0.7, fill = "darkgreen") +
   labs(title = "Monthly Accident Numbers ", x = "Months", y = "Number of Accidents") +
   theme_minimal()
 
@@ -57,19 +57,31 @@ colnames(daily_accident)
 daily_accident <- daily_accident %>%
   mutate(Gun = as.numeric(format(as.Date(tarih), "%d")))  
 
-daily_accident$month <- factor(daily_accident$month, levels = month.name)  # Ayları Ocak'tan Aralık'a sırala
-zirve_noktalar <- daily_accident %>%
-  group_by(month) %>%
-  filter(Kaza_Sayisi == max(Kaza_Sayisi, na.rm = TRUE))
+daily_accident$month <- factor(daily_accident$month, levels = month.name)
 
-ggplot(gunluk_kaza, aes(x = day, y = Kaza_Sayisi)) +
-  geom_line(color = "blue", size = 0.5) +  # Çizgi grafiği
-  geom_point(color = "red", size = 1) +  # Günlük noktalar
-  geom_point(data = zirve_noktalar, aes(x = Gun, y = Kaza_Sayisi), color = "green", size = 2) +  # Zirve noktaları
-  facet_wrap(~ Ay, scales = "free_x", ncol = 3) +  # Facet grid
-  labs(title = "Gunluk Kaza Sayilari",
-       x = "Gun",
-       y = "Kaza Sayisi") +
+library(dplyr)
+peak_points <- daily_accident %>%
+  group_by(month) %>%
+  filter(daily_accident == max(daily_accident, na.rm = TRUE))
+
+library(ggplot2)
+ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
+  geom_line(color = "black", size = 0.5) +
+  geom_point(color = "red", size = 1) +
+  geom_point(data = peak_points, aes(x = Gun, y = daily_accident), 
+             color = "purple", size = 2.5) +  # Zirve noktalarını yeşil yap
+  facet_wrap(~ month, scales = "free_y", ncol = 3) +
+  labs(title = "Annual Accident Number)",
+       x = "Day",
+       y = "Number of Accidents") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1),  # X ekseni yazılarını eğik yap
-        strip.text = element_text(size = 10, face = "bold"))  # Ay başlıklarını kalın yap
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        strip.text = element_text(size = 10, face = "bold"))
+
+
+# Zirve noktalarının tarihlerini listele
+peak_dates <- peak_points$tarih
+
+# Listeyi ekranda göster
+print(peak_dates)
+
