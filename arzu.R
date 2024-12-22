@@ -39,7 +39,7 @@ monthly_data <- data.frame(month = months, Total = total_values)
 install.packages("ggplot2")
 library(ggplot2)
 ggplot(monthly_data, aes(x = factor(month), y =Total)) +
-  geom_bar(stat = "identity",width = 0.7, fill = "darkgreen") +
+  geom_bar(stat = "identity",width = 0.7, fill = "purple") +
   labs(title = "Monthly Accident Numbers ", x = "Months", y = "Number of Accidents") +
   theme_minimal()
 
@@ -71,7 +71,7 @@ ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
   geom_point(data = peak_points, aes(x = Gun, y = daily_accident), 
              color = "purple", size = 2.5) +  # Zirve noktalarını yeşil yap
   facet_wrap(~ month, scales = "free_y", ncol = 3) +
-  labs(title = "Annual Accident Number)",
+  labs(title = "Annual Accident Number",
        x = "Day",
        y = "Number of Accidents") +
   theme_minimal() +
