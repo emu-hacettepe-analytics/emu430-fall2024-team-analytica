@@ -321,6 +321,7 @@ sorted_grouped_type_data <- grouped_data_type %>%
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
 
@@ -334,6 +335,8 @@ sorted_grouped_type_data <- grouped_data_type %>%
        
         
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 library(dplyr)
@@ -354,6 +357,9 @@ ggplot(sorted_grouped_type_data, aes(x = reorder(TUR, Accident_Type), y = Accide
   labs(title = "Distribution of Accidents According to Types (2023)", x = "Accident Types", y = "Frequency") +
   theme_minimal()
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
