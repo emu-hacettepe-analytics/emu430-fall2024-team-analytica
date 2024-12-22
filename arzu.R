@@ -71,7 +71,7 @@ ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
   geom_point(data = peak_points, aes(x = Gun, y = daily_accident), 
              color = "purple", size = 2.5) +  # Zirve noktalarını yeşil yap
   facet_wrap(~ month, scales = "free_y", ncol = 3) +
-  labs(title = "Annual Accident Number",
+  labs(title = "Monthly Accident Number",
        x = "Day",
        y = "Number of Accidents") +
   theme_minimal() +
