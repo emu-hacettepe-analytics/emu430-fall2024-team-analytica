@@ -212,6 +212,40 @@ ggplot(data_2023, aes(x = ISTIKAMET, y = GECEN_SURE)) +
   )
 
 
+
+# aynı garfiğin 150 ile sınırlandırılmış hali
+
+library(dplyr)
+library(ggplot2)
+
+# Veriyi filtreleme (150 ile sınırlama)
+data_filtered <- data_2023 %>%
+  filter(GECEN_SURE <= 150)
+
+# Sıralama ve faktör oluşturma
+data_sorted <- data_filtered %>%
+  group_by(ISTIKAMET) %>%
+  summarise(mean_gecen_sure = mean(GECEN_SURE, na.rm = TRUE)) %>%
+  arrange(desc(mean_gecen_sure))
+
+data_filtered$ISTIKAMET <- factor(data_filtered$ISTIKAMET, levels = data_sorted$ISTIKAMET)
+
+# Kutu Grafik Oluşturma
+ggplot(data_filtered, aes(x = ISTIKAMET, y = GECEN_SURE)) +
+  geom_boxplot(fill = "lightblue", color = "darkblue", outlier.color = "red", outlier.size = 2) +
+  labs(
+    title = "Response Time By Destinations (Limited to 150)",
+    x = "Destination",
+    y = "Response Time"
+  ) +
+  theme_minimal() + 
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    axis.text = element_text(size = 10)
+  )
+
+
 # Kaza türlerine göre ortalama müdehale sürelerinin incelenmesi
 
 library(ggplot2)
@@ -236,6 +270,32 @@ ggplot(data_2023, aes(x = TUR, y = ORTALAMA_GECEN_SURE)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     plot.title = element_text(hjust = 0.5, size = 16, face = "bold")
   )  
+
+# aynı grafiğin ave time 50 ile sınırlandırılmış hali
+
+library(ggplot2)
+library(dplyr)
+
+data_2023 <- data_2023 %>%
+  mutate(TUR = case_when(
+    TUR %in% c("Ölümlü Kaza Kaza Kaza Kaza Kaza", "Ölümlü Kaza Kaza Kaza Kaza Kaza Kaza") ~ "Ölümlü Kaza",
+    TRUE ~ TUR  # Diğer değerler olduğu gibi kalır
+  ))
+
+# Violin Grafik Oluşturma (Y Ekseni Sınırlama ile)
+ggplot(data_2023, aes(x = TUR, y = ORTALAMA_GECEN_SURE)) +
+  geom_violin(fill = "lightgreen", color = "darkgreen") +
+  labs(
+    title = "Average Response Time By Accident Types",
+    x = "Accident Type",
+    y = "Average Response Time"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold")
+  ) +
+  coord_cartesian(ylim = c(0, 50))  # Y ekseni 0-50 ile sınırlanır
 
 
 
