@@ -307,6 +307,7 @@ dates_together <- bind_rows(date_list)
 datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
 
 #---
+
 #aysunun
 library(dplyr)
 
@@ -318,6 +319,7 @@ grouped_data_type <- data_2023 %>%
 sorted_grouped_type_data <- grouped_data_type %>%
   arrange(desc(Accident_Type))
 
+<<<<<<< Updated upstream
 
 
 
@@ -330,3 +332,22 @@ sorted_grouped_type_data <- grouped_data_type %>%
         
        
         
+=======
+library(dplyr)
+
+data_2023 <- data_2023 %>%
+  mutate(TYPE_NUMBER = as.numeric(factor(TUR)))
+grouped_data_type <- data_2023 %>%
+  group_by(TUR) %>%  # Ture göre gruplama
+  summarise(Accident_Type = n())
+sorted_grouped_type_data <- grouped_data_type %>%
+  arrange(desc(Accident_Type))
+
+library(ggplot2)
+
+ggplot(sorted_grouped_type_data, aes(x = reorder(TUR, Accident_Type), y = Accident_Type)) +
+  geom_bar(stat = "identity", fill = "green", color = "black") +
+  coord_flip() +  
+  labs(title = "Distribution of Accidents According to Types (2023)", x = "Accident Types", y = "Frequency") +
+  theme_minimal()
+>>>>>>> Stashed changes
