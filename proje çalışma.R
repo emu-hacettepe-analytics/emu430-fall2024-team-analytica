@@ -156,7 +156,7 @@ library(dplyr)
 
 class(counts)
 
-#en yüksek kaza sayılı istikametler
+#en yüksek kaza sayılı istikametler bunu kullanmasak da olabilir
 count_sorted <- counts %>%
   arrange(desc(count))
 top_10_accidents <- head(count_sorted, 10)             
@@ -234,6 +234,7 @@ ggplot(accidents_date, aes(x = TARIH, y = Accident_Number)) +
 most_accidents_date <- accidents_date %>%
   filter(Accident_Number == max(Accident_Number)) %>%  # En çok kaza yapılan tarih(ler)
   pull(TARIH)
+most_accidents_date
 
 #En çok kaza yapıln gün ilçelere göre dağılım
 destination_accidents <- data_2023 %>%
@@ -265,7 +266,7 @@ destination_accidents_top_5 <- data_2023 %>%
   group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
   summarise(Accident_Number = n()) %>%  # Her istikamet için kaza sayısını hesaplama
   arrange(desc(Accident_Number))
-
+destination_accidents_top_5
 
 # En çok kaza yapılan 5 tarihteki kazaları tarihe ve istikamete göre gruplama
 accidents_date_destination <- data_2023 %>%
@@ -306,4 +307,14 @@ dates_together <- bind_rows(date_list)
 datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
 
 #---
+#aysunun
+library(dplyr)
+
+data_2023 <- data_2023 %>%
+  mutate(TYPE_NUMBER = as.numeric(factor(TUR)))
+grouped_data_type <- data_2023 %>%
+  group_by(TUR) %>%  # Ture göre gruplama
+  summarise(Accident_Type = n())
+sorted_grouped_type_data <- grouped_data_type %>%
+  arrange(desc(Accident_Type))
 
