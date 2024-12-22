@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.551">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>xxx’ Project Lab - Data</title>
+<title>Data – xxx’ Project Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -85,7 +119,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -104,7 +138,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
     <a href="https://twitter.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
@@ -115,11 +149,18 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#libraries" id="toc-libraries" class="nav-link active" data-scroll-target="#libraries">LIBRARIES</a></li>
+  <li><a href="#data-loading-and-pre-processing" id="toc-data-loading-and-pre-processing" class="nav-link" data-scroll-target="#data-loading-and-pre-processing"><strong>DATA LOADING AND PRE-PROCESSING</strong></a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -143,9 +184,357 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Data source: xxx</p>
+<p>Data source: <a href="https://acikveri.bizizmir.com/dataset/izmir-ili-arizali-kazali-arac-verileri"><strong>İzmir İli Arızalı, Kazalı Araç Verileri</strong></a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2p4ZnhvNzRmb3BodXVxaXFhc3dwaDI1N2hvZGE2ODVtMmk4bnp0NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VSqsArOOLAFnW/giphy.gif" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<section id="libraries" class="level2">
+<h2 class="anchored" data-anchor-id="libraries">LIBRARIES</h2>
+<pre><code>library(readxl)        # For reading Excel files
+library(stringr)       # For string manipulation
+library(dplyr)         # For data manipulation
+library(lubridate)     # For date and time operations
+library(ggplot2)       # For data visualization
+library(DT)            # For user interaction</code></pre>
+</section>
+<section id="data-loading-and-pre-processing" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading-and-pre-processing"><strong>DATA LOADING AND PRE-PROCESSING</strong></h2>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readxl' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'stringr' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'lubridate' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lubridate'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.4.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'DT' was built under R version 4.4.2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turkish characters detection</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setlocale</span>(<span class="st">"LC_ALL"</span>, <span class="st">"Turkish"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in Sys.setlocale("LC_ALL", "Turkish"): using locale code page other
+than 65001 ("UTF-8") may cause problems</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the data set</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data_original <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"izbb-kaza-ariza-verileri.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_original)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 x 7
+  TARIH               CADDE            ISTIKAMET KONUM TUR   KAZA_ZAMANI        
+  &lt;dttm&gt;              &lt;chr&gt;            &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt; &lt;dttm&gt;             
+1 2021-12-08 00:00:00 Havalimanı Şoşe~ Evka-5    Harm~ Madd~ 1899-12-31 17:57:00
+2 2021-12-06 00:00:00 Akçay Caddesi    Havalima~ Esba~ Arız~ 1899-12-31 07:27:00
+3 2021-12-09 00:00:00 Akçay Caddesi    Havalima~ Sarn~ Madd~ 1899-12-31 07:54:00
+4 2021-12-09 00:00:00 Akçay Caddesi    Havalima~ Serb~ Arız~ 1899-12-31 07:57:00
+5 2021-12-15 00:00:00 Yeşillik Caddesi Havalima~ Paşa~ Arız~ 1899-12-31 11:57:00
+6 2021-12-17 00:00:00 Akçay Caddesi    Havalima~ Esbaş Madd~ 1899-12-31 08:02:00
+# i 1 more variable: MUDAHALE_ZAMANI &lt;dttm&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_original)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [17,788 x 7] (S3: tbl_df/tbl/data.frame)
+ $ TARIH          : POSIXct[1:17788], format: "2021-12-08" "2021-12-06" ...
+ $ CADDE          : chr [1:17788] "Havalimanı Şoşesi" "Akçay Caddesi" "Akçay Caddesi" "Akçay Caddesi" ...
+ $ ISTIKAMET      : chr [1:17788] "Evka-5" "Havalimanı" "Havalimanı" "Havalimanı" ...
+ $ KONUM          : chr [1:17788] "Harmandalı Meydanı" "Esbaş Alt Geçit" "Sarnıç Alt Geçit Üzeri" "Serbest Bölge Alt Geçit Öncesi" ...
+ $ TUR            : chr [1:17788] "Maddi Hasarlı" "Arızalı" "Maddi Hasarlı" "Arızalı" ...
+ $ KAZA_ZAMANI    : POSIXct[1:17788], format: "1899-12-31 17:57:00" "1899-12-31 07:27:00" ...
+ $ MUDAHALE_ZAMANI: POSIXct[1:17788], format: "1899-12-31 18:14:00" "1899-12-31 07:41:00" ...</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many NA in which column?</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(data_original))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          TARIH           CADDE       ISTIKAMET           KONUM             TUR 
+              0               0              16              14               0 
+    KAZA_ZAMANI MUDAHALE_ZAMANI 
+              0            4400 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete NA ones in the ISTIKAMET column</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_original[<span class="sc">!</span><span class="fu">is.na</span>(data_original<span class="sc">$</span>ISTIKAMET), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See unique destination names</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>unique_istikamet <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>ISTIKAMET))</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_istikamet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "1. Sanayi"            "5. Sanayi"            "Adliye"              
+  [4] "Adnan Kahveci Köprü"  "Akıncılar"            "Alaybey"             
+  [7] "alsancak"             "Alsancak"             "Alsancak Gar"        
+ [10] "Alsancak İstikameti"  "Altındağ"             "Altınyol"            
+ [13] "Anıt"                 "Atakent"              "Atasanayi"           
+ [16] "Ataşehir"             "Atatürk Stadyumu"     "Bahçelievler"        
+ [19] "Balçova"              "Basmane"              "Bayraklı"            
+ [22] "Bayramyeri"           "Beyazevler"           "bornova"             
+ [25] "Bornova"              "Borsa"                "Borsa Kavşağı"       
+ [28] "Bostanlı"             "Bozyaka"              "Buca"                
+ [31] "Buca Heykel"          "Cumhuriyet"           "Cumhuriyet Meydanı"  
+ [34] "Çankaya"              "Çeşme"                "Çevik Bir"           
+ [37] "Çevre Yolu"           "Çevreyolu"            "Çiğli"               
+ [40] "Çınarlı"              "Dokuz Çeşmeler"       "Egemak Kavşağı"      
+ [43] "Eşrefpaşa"            "Evka-3"               "Evka-5"              
+ [46] "F.Altay"              "Fahrettin altay"      "Fahrettin Altay"     
+ [49] "Fuar"                 "Gaziemir"             "Gediz"               
+ [52] "Gıda Çarşısı"         "Göztepe"              "Gündoğdu"            
+ [55] "Gürçeşme"             "Güzelbahçe"           "Halit Ziya Bulvarı"  
+ [58] "Halkapınar"           "Harmandalı"           "havalimanı"          
+ [61] "Havalimanı"           "Heykel"               "Hipodrum"            
+ [64] "İkiçeşmelik"          "İnciraltı"            "İnciraltı İstikameti"
+ [67] "İskele"               "İşçievleri Kavşağı"   "Işıkkent"            
+ [70] "İzmir"                "Kapılar"              "karabağlar"          
+ [73] "Karabağlar"           "Karataş"              "Karşıa"              
+ [76] "Karşıyaka"            "Kaymakkuyu"           "Kaynaklar"           
+ [79] "Kemalpaş"             "kemalpaşa"            "Kemalpaşa"           
+ [82] "Kemer"                "Kırıklar"             "Kısık"               
+ [85] "konak"                "Konak"                "Konak Tüneli"        
+ [88] "Koyundere"            "Köstence"             "Liman"               
+ [91] "Liman D Kapısı"       "Lojmanlar"            "Mahvel"              
+ [94] "Mahvel Kavşağı"       "Mai"                  "Manavkuyu"           
+ [97] "Manisa"               "Marina"               "Mavibahçe"           
+[100] "Mavişehir"            "Meles"                "Menderes"            
+[103] "Menemen"              "Merkez"               "Montrö"              
+[106] "Mürselpaşa Bulvarı"   "Narlıdere"            "Nato"                
+[109] "Osman Kibar"          "Otoban"               "otogar"              
+[112] "Otogar"               "Örnekköy"             "Pınarbaşı"           
+[115] "Pınarbaşo"            "Sahil"                "Salhane"             
+[118] "Sanayi"               "Sarnıç"               "Sasalı"              
+[121] "Serbest Bölge"        "Smyrna"               "Soğukkuyu"           
+[124] "Stadyum"              "Şirinyer"             "Taşkent"             
+[127] "Teleferik"            "Tepecik"              "Tersane"             
+[130] "Tınaztepe"            "Torbalı"              "Turan"               
+[133] "Urla"                 "Üçkuyular"            "Üçkuyular Meydan"    
+[136] "Üçyo"                 "üçyol"                "Üçyol"               
+[139] "Yağhaneler"           "Yaşayanlar"           "Yeni Girne"          
+[142] "Yenişehir"            "Yeşildere"            "Yeşilova"            
+[145] "Yeşilyurt"            "Yıkık Kemer"          "Yıkıkkemer"          
+[148] "Yunuslar"            </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String edits in destination names</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Alsancak|Alsancak İstikameti|Alsancak Gar|alsancak"</span>, <span class="st">"Alsancak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Buca|Buca Heykel"</span>, <span class="st">"Buca"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Konak|Konak Tüneli|Konak İstikameti"</span>, <span class="st">"Konak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Kemalpaşa|kemalpaşa|Kemalpaş"</span>, <span class="st">"Kemalpaşa"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Havalimanı|havalimanı"</span>, <span class="st">"Havalimanı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"İnciraltı|İnciraltı İstikameti"</span>, <span class="st">"İnciraltı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Üçkuyular|Üçkuyular Meydan"</span>, <span class="st">"Üçkuyular"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Sarnıç|Sarniç"</span>, <span class="st">"Sarnıç"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Fahrettin Altay|F.Altay|Fahrettin altay"</span>, <span class="st">"Fahrettin Altay"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Tersane|Tersanesi"</span>, <span class="st">"Tersane"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Otogar|Otogar Meydanı"</span>, <span class="st">"Otogar"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Basmane|Basmane Gar"</span>, <span class="st">"Basmane"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Pınarbaşı|Pınarbaşo"</span>, <span class="st">"Pınarbaşı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Üçyol|üçyol|Üçyo"</span>, <span class="st">"Üçyol"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Karabağlar|karabağlar"</span>, <span class="st">"Karabağlar"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Konak|konak"</span>, <span class="st">"Konak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Gündoğdu|Gündoğdu Mahallesi"</span>, <span class="st">"Gündoğdu"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Mahvel|Mahvel Kavşağı"</span>, <span class="st">"Mahvel"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Beyazevler|Beyaz Evler"</span>, <span class="st">"Beyazevler"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Adliye|Adliye Kavşağı"</span>, <span class="st">"Adliye"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Harmandalı|Harmandali"</span>, <span class="st">"Harmandalı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yıkık Kemer|Yıkıkkemer|Yıkıkker"</span>, <span class="st">"Yıkıkkemer"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Karşıa"</span>, <span class="st">"Karşıyaka"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Liman D Kapısı"</span>, <span class="st">"Liman"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"otogar"</span>, <span class="st">"Otogar"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"bornova"</span>, <span class="st">"Bornova"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Mai"</span>, <span class="st">"Mustafa Kemal Sahil"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Borsa|Borsa Kavşağı"</span>, <span class="st">"Borsa"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Çevre Yolu|Çevreyolu"</span>, <span class="st">"Çevreyolu"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking destination names</span></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>unique_istikamet_new <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>ISTIKAMET))</span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_istikamet_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] "1. Sanayi"           "5. Sanayi"           "Adliye"             
+  [4] "Adnan Kahveci Köprü" "Akıncılar"           "Alaybey"            
+  [7] "Alsancak"            "Altındağ"            "Altınyol"           
+ [10] "Anıt"                "Atakent"             "Atasanayi"          
+ [13] "Ataşehir"            "Atatürk Stadyumu"    "Bahçelievler"       
+ [16] "Balçova"             "Basmane"             "Bayraklı"           
+ [19] "Bayramyeri"          "Beyazevler"          "Bornova"            
+ [22] "Borsa"               "Bostanlı"            "Bozyaka"            
+ [25] "Buca"                "Cumhuriyet"          "Cumhuriyet Meydanı" 
+ [28] "Çankaya"             "Çeşme"               "Çevik Bir"          
+ [31] "Çevreyolu"           "Çiğli"               "Çınarlı"            
+ [34] "Dokuz Çeşmeler"      "Egemak Kavşağı"      "Eşrefpaşa"          
+ [37] "Evka-3"              "Evka-5"              "Fahrettin Altay"    
+ [40] "Fuar"                "Gaziemir"            "Gediz"              
+ [43] "Gıda Çarşısı"        "Göztepe"             "Gündoğdu"           
+ [46] "Gürçeşme"            "Güzelbahçe"          "Halit Ziya Bulvarı" 
+ [49] "Halkapınar"          "Harmandalı"          "Havalimanı"         
+ [52] "Heykel"              "Hipodrum"            "İkiçeşmelik"        
+ [55] "İnciraltı"           "İskele"              "İşçievleri Kavşağı" 
+ [58] "Işıkkent"            "İzmir"               "Kapılar"            
+ [61] "Karabağlar"          "Karataş"             "Karşıyaka"          
+ [64] "Kaymakkuyu"          "Kaynaklar"           "Kemalpaşa"          
+ [67] "Kemer"               "Kırıklar"            "Kısık"              
+ [70] "Konak"               "Koyundere"           "Köstence"           
+ [73] "Liman"               "Lojmanlar"           "Mahvel"             
+ [76] "Manavkuyu"           "Manisa"              "Marina"             
+ [79] "Mavibahçe"           "Mavişehir"           "Meles"              
+ [82] "Menderes"            "Menemen"             "Merkez"             
+ [85] "Montrö"              "Mustafa Kemal Sahil" "Mürselpaşa Bulvarı" 
+ [88] "Narlıdere"           "Nato"                "Osman Kibar"        
+ [91] "Otoban"              "Otogar"              "Örnekköy"           
+ [94] "Pınarbaşı"           "Sahil"               "Salhane"            
+ [97] "Sanayi"              "Sarnıç"              "Sasalı"             
+[100] "Serbest Bölge"       "Smyrna"              "Soğukkuyu"          
+[103] "Stadyum"             "Şirinyer"            "Taşkent"            
+[106] "Teleferik"           "Tepecik"             "Tersane"            
+[109] "Tınaztepe"           "Torbalı"             "Turan"              
+[112] "Urla"                "Üçkuyular"           "Üçyol"              
+[115] "Yağhaneler"          "Yaşayanlar"          "Yeni Girne"         
+[118] "Yenişehir"           "Yeşildere"           "Yeşilova"           
+[121] "Yeşilyurt"           "Yıkıkkemer"          "Yunuslar"           </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>unique_tur <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>TUR))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_tur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Adli Vaka"            "Ağır Vasıta"          "Arızalı"             
+ [4] "Asfalt Çalışması"     "Aşan Yükseklik"       "Bekleme"             
+ [7] "Futbol Maçı"          "Heyelan"              "İzsu Çalışması"      
+[10] "Konteynır Devrilmesi" "maddi Hasarlı"        "Maddi Hasarlı"       
+[13] "MAddi Hasarlı"        "Ölümlü"               "Ölümlü Kaza"         
+[16] "Patlak Lastik"        "Perdeleme"            "Takla Atan"          
+[19] "Tramvay Kazası"       "Uygulama"             "Yakıt Bitimi"        
+[22] "Yakıtı Biten"         "Yanan Araç"           "Yangın"              
+[25] "yaralanmalı Kaza"     "Yaralanmalı Kaza"     "Yaya Yolu Çalışması" 
+[28] "Yoğun Duman"          "Yol Yapım"            "Zincirleme Kaza"     </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String edits in accident type names</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı"</span>, <span class="st">"Maddi Hasarlı"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Ölümlü"</span>, <span class="st">"Ölümlü Kaza"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yakıtı Biten"</span>, <span class="st">"Yakıt Bitimi"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yangın"</span>, <span class="st">"Yanan Araç"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"yaralanmalı Kaza"</span>, <span class="st">"Yaralanmalı Kaza"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking accident type names</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>unique_tur_new <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>TUR))</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_tur_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Adli Vaka"            "Ağır Vasıta"          "Arızalı"             
+ [4] "Asfalt Çalışması"     "Aşan Yükseklik"       "Bekleme"             
+ [7] "Futbol Maçı"          "Heyelan"              "İzsu Çalışması"      
+[10] "Konteynır Devrilmesi" "Maddi Hasarlı"        "Ölümlü Kaza"         
+[13] "Ölümlü Kaza Kaza"     "Patlak Lastik"        "Perdeleme"           
+[16] "Takla Atan"           "Tramvay Kazası"       "Uygulama"            
+[19] "Yakıt Bitimi"         "Yanan Araç"           "Yaralanmalı Kaza"    
+[22] "Yaya Yolu Çalışması"  "Yoğun Duman"          "Yol Yapım"           
+[25] "Zincirleme Kaza"     </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of data for each destination</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ISTIKAMET) <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finding direction values with less than 5 data</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>istikamet_to_remove <span class="ot">&lt;-</span> counts <span class="sc">%&gt;%</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(count <span class="sc">&lt;</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(ISTIKAMET)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete them from the data set</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>ISTIKAMET <span class="sc">%in%</span> istikamet_to_remove)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the time between accident time and intervention time and add it as a new column</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>GECEN_SURE <span class="ot">&lt;-</span> <span class="fu">difftime</span>(data_new<span class="sc">$</span>MUDAHALE_ZAMANI, data_new<span class="sc">$</span>KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking into account the day difference for interventions arriving after midnight</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">GECEN_SURE =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>      MUDAHALE_ZAMANI <span class="sc">&lt;</span> KAZA_ZAMANI, </span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">difftime</span>(MUDAHALE_ZAMANI <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>), KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>),</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">difftime</span>(MUDAHALE_ZAMANI, KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the average response time for each destination</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ISTIKAMET) <span class="sc">%&gt;%</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ORTALAMA_GECEN_SURE =</span> <span class="fu">mean</span>(GECEN_SURE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill each NA value for GECEN_SURE with the average time of the direction it is connected to</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GECEN_SURE =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(GECEN_SURE), ORTALAMA_GECEN_SURE, GECEN_SURE))</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(data_new<span class="sc">$</span>GECEN_SURE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+</div>
 
 
+</section>
 
 <a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -327,18 +716,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -370,7 +748,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -378,7 +778,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
