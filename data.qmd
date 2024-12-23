@@ -42,7 +42,15 @@ data_original <- read_excel("izbb-kaza-ariza-verileri.xlsx")
 -   First, we read our data containing the accident data with the read_excel function.
 
 ```{r}
-datatable(head(data_original))
+datatable(head(data_original), options = list(
+  pageLength = 10,
+  dom = 't'
+)) %>%
+  formatStyle(
+    columns = colnames(head(data_original)),
+    fontSize = '9px',        
+    padding = '1px'          
+  )
 ```
 
 -   Here we see the first rows of our dataset. As stated in the table on the previous page, the columns indicate date, street, direction, location, type, accident time and intervention time, respectively.
@@ -166,7 +174,7 @@ head(sort(unique_tur_new),10)
 length(unique_tur_new)
 ```
 
--   As a result of this process, the number of unique accident types decreased to 25.
+-   As a result of this process, the number of unique accident types decreased to 24.
 
 ```{r}
 # Calculate the number of data for each destination
@@ -186,7 +194,15 @@ istikamet_to_remove <- counts %>%
 data_new <- data_new %>%
   filter(!ISTIKAMET %in% istikamet_to_remove)
 
-datatable(head(data_new))
+datatable(head(data_new), options = list(
+  pageLength = 10,
+  dom = 't'
+)) %>%
+  formatStyle(
+    columns = colnames(head(data_original)),
+    fontSize = '9px',        
+    padding = '1px'          
+  )
 ```
 
 -   Then, the data set was grouped according to the direction and the number of rows of data for each direction was found. Then, the directions with less than 5 data were determined and removed from the data set. As a result of the operations, there are 17,656 rows in the data set named data_new.
@@ -207,7 +223,15 @@ data_new <- data_new %>%
     )
   )
 
-datatable(head(data_new))
+datatable(head(data_new), options = list(
+  pageLength = 10,
+  dom = 't'
+)) %>%
+  formatStyle(
+    columns = colnames(head(data_original)),
+    fontSize = '9px',        
+    padding = '1px'          
+  )
 ```
 
 -   Later, a new column named GECEN_SURE was added to the data set and in this row, the difference between the accident time and the intervention time was specified in minutes. There is also a section in the code to prevent the result from being negative in interventions after midnight.
@@ -230,7 +254,15 @@ sum(is.na(data_new$GECEN_SURE))
 -   Then, the average of the elapsed time values ​​for each direction was found and added to the data as a new column named ORTALAMA_GECEN_SURE. Then, each NA value in the GECEN_SURE column was filled with the average time of the direction it belonged to. As a result of this process, it is seen that there is no empty data left in this column.
 
 ```{r}
-datatable(head(data_new))
+datatable(head(data_new), options = list(
+  pageLength = 10,
+  dom = 't'
+)) %>%
+  formatStyle(
+    columns = colnames(head(data_original)),
+    fontSize = '9px',        
+    padding = '1px'          
+  )
 ```
 
 -   The dataframe named data_new, which is the result of the NA and String Processing operations, can be used for analysis studies.
