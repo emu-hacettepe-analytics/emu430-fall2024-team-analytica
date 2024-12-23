@@ -17,9 +17,9 @@ library(ggplot2)       # For data visualization
 library(DT)            # For user interaction
 ```
 
-## **DATA LOADING AND PRE-PROCESSING**
+## **DATA LOADING AND GENERAL INFORMATIONS**
 
-```{r, results='hide', echo=FALSE}
+```{r echo=TRUE, include=FALSE}
 library(readxl)        
 library(stringr)    
 library(dplyr)         
@@ -28,7 +28,7 @@ library(ggplot2)
 library(DT)           
 ```
 
-```{r, results='hide'}
+```{r, echo=TRUE, include=FALSE}
 
 # Turkish characters detection
 Sys.setlocale("LC_ALL", "Turkish")
@@ -39,13 +39,19 @@ Sys.setlocale("LC_ALL", "Turkish")
 data_original <- read_excel("izbb-kaza-ariza-verileri.xlsx")
 ```
 
+-   First, we read our data containing the accident data with the read_excel function.
+
 ```{r}
-head(data_original)
+datatable(head(data_original))
 ```
+
+-   Here we see the first rows of our dataset. As stated in the table on the previous page, the columns indicate date, street, direction, location, type, accident time and intervention time, respectively.
 
 ```{r}
 str(data_original)
 ```
+
+-   Here we see general information about the dataframe. Our data has 7 columns and 17,788 rows. Street, direction, location and type columns are in character data type, date, accident time and intervention time columns are in POSIXct date data type.
 
 ```{r}
 # How many NA in which column?
@@ -53,19 +59,31 @@ str(data_original)
 colSums(is.na(data_original))
 ```
 
+-   Here we see how many NA values ​​there are in each column. There are 16 NA values ​​in the direction column and 4400 NA values ​​at the intervention time.
+
+## NA AND STRING PROCESSING
+
 ```{r}
 # Delete NA ones in the ISTIKAMET column
 
 data_new <- data_original[!is.na(data_original$ISTIKAMET), ]
 ```
 
+-   With this code we deleted all 16 NA values ​​in the direction column.
+
 ```{r}
 # See unique destination names
 
 unique_istikamet <- sort(unique(data_new$ISTIKAMET))
 
-print(unique_istikamet)
+head(sort(unique_istikamet),10)
 
+length(unique_istikamet)
+```
+
+-   As seen above, there are 148 different direction values ​​in our data set. Among these, there are values ​​such as "Alsancak", "Alsancak Gar" and "Alsancak İstikameti" that are written differently but describe the same place.
+
+```{r}
 # String edits in destination names
 
 data_new$ISTIKAMET <- gsub("Alsancak|Alsancak İstikameti|Alsancak Gar|alsancak", "Alsancak", data_new$ISTIKAMET)
@@ -97,33 +115,58 @@ data_new$ISTIKAMET <- gsub("bornova", "Bornova", data_new$ISTIKAMET)
 data_new$ISTIKAMET <- gsub("Mai", "Mustafa Kemal Sahil", data_new$ISTIKAMET)
 data_new$ISTIKAMET <- gsub("Borsa|Borsa Kavşağı", "Borsa", data_new$ISTIKAMET)
 data_new$ISTIKAMET <- gsub("Çevre Yolu|Çevreyolu", "Çevreyolu", data_new$ISTIKAMET)
+```
 
+-   In this way, a string arrangement was made using the gsub function to collect similar or misspelled destination names into a single form.
+
+```{r}
 # Checking destination names
 
 unique_istikamet_new <- sort(unique(data_new$ISTIKAMET))
 
-print(unique_istikamet_new)
+head(sort(unique_istikamet_new),10)
+
+length(unique_istikamet_new)
 ```
 
+-   As a result of this process, the number of unique direction values ​​​​has decreased to 123.
+
 ```{r}
+# see unique accident type names
+
 unique_tur <- sort(unique(data_new$TUR))
 
-print(unique_tur)
+head(sort(unique_tur),10)
 
+length(unique_tur)
+```
+
+-   The same process was done for accident types. As seen here, there are 30 unique accident type names. These include similar expressions such as "maddi Hasarlı", "Maddi Hasarlı".
+
+```{r}
 # String edits in accident type names
 
 data_new$TUR <- gsub("maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı", "Maddi Hasarlı", data_new$TUR)
-data_new$TUR <- gsub("Ölümlü", "Ölümlü Kaza", data_new$TUR)
+data_new$TUR <- gsub("Ölümlü|Ölümlü Kaza", "Ölümlü Kaza", data_new$TUR)
 data_new$TUR <- gsub("Yakıtı Biten", "Yakıt Bitimi", data_new$TUR)
 data_new$TUR <- gsub("Yangın", "Yanan Araç", data_new$TUR)
 data_new$TUR <- gsub("yaralanmalı Kaza", "Yaralanmalı Kaza", data_new$TUR)
 
+```
+
+-   Similar expressions are again replaced with the gsub function.
+
+```{r}
 # Checking accident type names
 
 unique_tur_new <- sort(unique(data_new$TUR))
 
-print(unique_tur_new)
+head(sort(unique_tur_new),10)
+
+length(unique_tur_new)
 ```
+
+-   As a result of this process, the number of unique accident types decreased to 25.
 
 ```{r}
 # Calculate the number of data for each destination
@@ -131,9 +174,7 @@ print(unique_tur_new)
 counts <- data_new %>%
   group_by(ISTIKAMET) %>%
   summarise(count = n())
-```
 
-```{r}
 # Finding direction values with less than 5 data
 
 istikamet_to_remove <- counts %>%
@@ -145,7 +186,10 @@ istikamet_to_remove <- counts %>%
 data_new <- data_new %>%
   filter(!ISTIKAMET %in% istikamet_to_remove)
 
+datatable(head(data_new))
 ```
+
+-   Then, the data set was grouped according to the direction and the number of rows of data for each direction was found. Then, the directions with less than 5 data were determined and removed from the data set. As a result of the operations, there are 17,656 rows in the data set named data_new.
 
 ```{r}
 # Calculate the time between accident time and intervention time and add it as a new column
@@ -162,7 +206,11 @@ data_new <- data_new %>%
       difftime(MUDAHALE_ZAMANI, KAZA_ZAMANI, units = "mins")
     )
   )
+
+datatable(head(data_new))
 ```
+
+-   Later, a new column named GECEN_SURE was added to the data set and in this row, the difference between the accident time and the intervention time was specified in minutes. There is also a section in the code to prevent the result from being negative in interventions after midnight.
 
 ```{r}
 # Calculate the average response time for each destination
@@ -178,3 +226,11 @@ data_new <- data_new %>%
 
 sum(is.na(data_new$GECEN_SURE))
 ```
+
+-   Then, the average of the elapsed time values ​​for each direction was found and added to the data as a new column named ORTALAMA_GECEN_SURE. Then, each NA value in the GECEN_SURE column was filled with the average time of the direction it belonged to. As a result of this process, it is seen that there is no empty data left in this column.
+
+```{r}
+datatable(head(data_new))
+```
+
+-   The dataframe named data_new, which is the result of the NA and String Processing operations, can be used for analysis studies.
