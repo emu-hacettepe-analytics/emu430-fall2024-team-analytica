@@ -5,5 +5,148 @@ title: "Analysis"
 About this site
 
 ```{r}
-1 + 1
+library(readxl)
+library(dplyr)
+library(stringr)
+library(lubridate)
+Sys.setlocale("LC_ALL", "Turkish")
+data_new <- read_excel("izbb-kaza-ariza-verileri.xlsx")
+data_2023 <- data_new %>%
+  mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d")) %>%  # Changing date format to yyyy-mm-dd 
+  filter(year(TARIH) == 2023)
+data_2023
 ```
+
+-   By using the "data_new" dataset, we created the "data_2023".In this data set, we can see the accidents that occurred in 2023 filtered.
+
+```{r}
+data_2023 <- data_2023 %>%
+  mutate(ISTIKAMET_SAYISI = as.numeric(factor(ISTIKAMET)))
+grouped_data_2 <- data_2023 %>%
+  group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
+  summarise(Total_Accidents = n())
+grouped_data_2
+```
+
+-   By making a grouping of the accidents that took place in 2023 according to the
+    directions, we examined how many accidents were made in which direction.
+
+```{r}
+sorted_grouped_data <- grouped_data_2 %>%
+  arrange(desc(Total_Accidents))
+sorted_grouped_data
+```
+
+-   We have sorted the accident numbers by destination points.
+
+```{r}
+library(ggplot2)
+
+ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Total_Accidents)) +
+  geom_bar(stat = "identity", fill = "purple", color = "black") +
+  coord_flip() +  
+  labs(title = "Distribution of Accidents According to Directions (2023)", x = "Destination", y = "Frequency") +
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 3))
+
+```
+
+-   We have created a bar plot showing the distribution according to directions using our data set, the accident numbers of which have already been sorted to decreasing order.We can see that the most accidents occur in Merkez ,Bornova, Gaziemir, Konak and Çiğli.
+
+```{r}
+library(dplyr)
+accidents_date <- data_2023 %>%
+  group_by(TARIH) %>%  
+  summarise(Accident_Number = n())
+accidents_date
+```
+
+-   We created a data set named "accidents_date" showing how many accidents happened on what date.
+
+```{r}
+library(dplyr)
+most_accidents_date <- accidents_date %>%
+  filter(Accident_Number == max(Accident_Number)) %>%  # The date(s) with most accidents
+  pull(TARIH)
+most_accidents_date
+```
+
+-   We found out which day the most accidents happened.It is 22 June of 2023.
+
+```{r}
+sorted_accidents_date <-accidents_date %>%
+  arrange(desc(Accident_Number))
+
+head(sorted_accidents_date,10)
+```
+
+-   We sorted these numbers in descending order and collect them in a data set named "sorted_accidents_date". Here you can also see the ten days with the most accidents.
+
+```{r}
+destination_accidents <- data_2023 %>%
+  filter(TARIH %in% most_accidents_date) %>%  
+  group_by(ISTIKAMET) %>%  #Grouping be destinations
+  summarise(Accident_Number = n()) %>%  
+  arrange(desc(Accident_Number)) 
+destination_accidents
+```
+
+-   On June 22, 2023, the day of the most accidents, we collected how many accidents were caused while going to which direction in the data set named "destination_accidents".
+
+```{r}
+library(ggplot2)
+
+ggplot(destination_accidents, aes(x = reorder(ISTIKAMET, Accident_Number), y = Accident_Number)) +
+  geom_bar(stat = "identity", fill = "brown", color = "black") +
+  labs(title = "Accidents According to Directions on the Dates with the Most Accidents", x = "Destination", y = "Number of Accidents") +
+  theme_minimal()
+```
+
+-   In order to better see the distribution, we had a bar plot drawn according to the direction.As we saw in the previous bar plot, the first three directions are again "Merkez","Gaziemir" and "Bornova".
+
+```{r}
+library(dplyr)
+top_5_most_accident_dates <- accidents_date %>%
+  arrange(desc(Accident_Number)) %>%  
+  slice(1:5) %>%  #Selecting the first 5 rows
+  pull(TARIH)
+top_5_most_accident_dates
+```
+
+-   In our studies that we have done so far, we have found that the number of accidents is usually higher in the same directions.To better understand this, we also examine the first five days with the most accidentsWith the help of this code, we learn about the five days with the most accidents.
+
+```{r}
+destination_accidents_top_5 <- data_2023 %>%
+  filter(TARIH %in% top_5_most_accident_dates) %>%  
+  group_by(ISTIKAMET) %>%  
+  summarise(Accident_Number = n()) %>%  # Calculating the accident number for each destination point.
+  arrange(desc(Accident_Number))
+destination_accidents_top_5
+```
+
+-   We have collected the distribution of the five most accident days according to the directions in the data set named "destination_accidents_top_5" and sorted them in descending order
+
+```{r}
+accidents_date_destination <- data_2023 %>%
+  filter(TARIH %in% top_5_most_accident_dates) %>%  
+  group_by(TARIH, ISTIKAMET) %>%  # Grouping by date and destination 
+  summarise(Accident_Number = n()) %>%  # Calculating the number of accidents for each group
+  arrange(TARIH, desc(Accident_Number))  
+accidents_date_destination
+```
+
+-   With the help of this code, we have grouped the accidents on the five days with the most accidents according to the date and direction and sorted each date in descending order. and again, as we expected, the first three directions on three of the five days are "Merkez", "Gaziemir", "Bornova", while the remaining two days "Merkez" and "Gaziemir" are in the first two places.
+
+```{r}
+library(DT)
+date_list <- accidents_date_destination %>%
+  group_split(TARIH)
+for (i in seq_along(date_list)) {
+  cat("Tarih:", unique(date_list[[i]]$TARIH), "\n")
+  datatable(date_list[[i]], options = list(pageLength = 5, scrollX = TRUE))
+}
+dates_together <- bind_rows(date_list)
+datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
+```
+
+-   Thanks to this interactive table, you can Decipher the distribution of accidents according to directions in the first five days, where the most accidents occurred, by searching as you want.
