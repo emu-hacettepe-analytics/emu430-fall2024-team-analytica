@@ -2,13 +2,13 @@
 title: "Analysis"
 ---
 
-About this site
-
 ```{r echo=TRUE, include=FALSE}
 library(readxl)
 library(dplyr)
 library(stringr)
 library(lubridate)
+library(knitr)
+library(DT)
 ```
 
 ```{r echo=TRUE, include=FALSE}
@@ -20,7 +20,23 @@ data_new <- read_excel("izbb-kaza-ariza-verileri.xlsx")
 data_2023 <- data_new %>%
   mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d")) %>%  # Changing date format to yyyy-mm-dd 
   filter(year(TARIH) == 2023)
-data_2023
+datatable(data_2023, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Accident Data of Izmir  for the Year 2023") %>%
+  DT::formatStyle(
+    columns = colnames(data_2023), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'});
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 ```
 
 -   By using the "data_new" dataset, we created the "data_2023".In this data set, we can see the accidents that occurred in 2023 filtered.
@@ -29,9 +45,25 @@ data_2023
 data_2023 <- data_2023 %>%
   mutate(ISTIKAMET_SAYISI = as.numeric(factor(ISTIKAMET)))
 grouped_data_2 <- data_2023 %>%
-  group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
+  group_by(ISTIKAMET) %>%  
   summarise(Total_Accidents = n())
-grouped_data_2
+datatable(grouped_data_2, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Number of Accidents by Direction (2023)") %>%
+  DT::formatStyle(
+    columns = colnames(grouped_data_2), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 ```
 
 -   By making a grouping of the accidents that took place in 2023 according to the
@@ -40,7 +72,23 @@ grouped_data_2
 ```{r}
 sorted_grouped_data <- grouped_data_2 %>%
   arrange(desc(Total_Accidents))
-sorted_grouped_data
+datatable(sorted_grouped_data, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Number of Accidents by Direction (2023) - Descending Order") %>%
+  DT::formatStyle(
+    columns = colnames(sorted_grouped_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 ```
 
 -   We have sorted the accident numbers by destination points.
@@ -51,7 +99,7 @@ library(ggplot2)
 ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Total_Accidents)) +
   geom_bar(stat = "identity", fill = "purple", color = "black") +
   coord_flip() +  
-  labs(title = "Distribution of Accidents According to Directions (2023)", x = "Destination", y = "Frequency") +
+  labs(title = "Distribution of Accidents According to Directions (2023)", x = "Direction", y = "Frequency") +
   theme_minimal() +
   theme(axis.text.y = element_text(size = 3))
 
@@ -64,7 +112,23 @@ library(dplyr)
 accidents_date <- data_2023 %>%
   group_by(TARIH) %>%  
   summarise(Accident_Number = n())
-accidents_date
+datatable(accidents_date, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Number of Accidents by Date (2023)") %>%
+  DT::formatStyle(
+    columns = colnames(accidents_date), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 ```
 
 -   We created a data set named "accidents_date" showing how many accidents happened on what date.
@@ -82,8 +146,23 @@ most_accidents_date
 ```{r}
 sorted_accidents_date <-accidents_date %>%
   arrange(desc(Accident_Number))
-
-head(sorted_accidents_date,10)
+datatable(sorted_accidents_date, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Sequential Distribution of Accidents by Date (2023)") %>%
+  DT::formatStyle(
+    columns = colnames(sorted_accidents_date), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 ```
 
 -   We sorted these numbers in descending order and collect them in a data set named "sorted_accidents_date". Here you can also see the ten days with the most accidents.
@@ -91,10 +170,26 @@ head(sorted_accidents_date,10)
 ```{r}
 destination_accidents <- data_2023 %>%
   filter(TARIH %in% most_accidents_date) %>%  
-  group_by(ISTIKAMET) %>%  #Grouping be destinations
+  group_by(ISTIKAMET) %>%  #Grouping by directions
   summarise(Accident_Number = n()) %>%  
   arrange(desc(Accident_Number)) 
-destination_accidents
+datatable(destination_accidents, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Accidents According to the Direction of the Most Accidents") %>%
+  DT::formatStyle(
+    columns = colnames(destination_accidents), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 ```
 
 -   On June 22, 2023, the day of the most accidents, we collected how many accidents were caused while going to which direction in the data set named "destination_accidents".
@@ -127,36 +222,50 @@ destination_accidents_top_5 <- data_2023 %>%
   group_by(ISTIKAMET) %>%  
   summarise(Accident_Number = n()) %>%  # Calculating the accident number for each destination point.
   arrange(desc(Accident_Number))
-destination_accidents_top_5
+datatable(destination_accidents_top_5, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Directions on the 5 Days with the Most Accidents") %>%
+  DT::formatStyle(
+    columns = colnames(destination_accidents_top_5), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 ```
 
--   We have collected the distribution of the five most accident days according to the directions in the data set named "destination_accidents_top_5" and sorted them in descending order
+-   We have collected the distribution of the five most accident days according to the directions in the data set named "destination_accidents_top_5" and sorted them in descending order.
 
-```{r}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
 accidents_date_destination <- data_2023 %>%
   filter(TARIH %in% top_5_most_accident_dates) %>%  
   group_by(TARIH, ISTIKAMET) %>%  # Grouping by date and destination 
   summarise(Accident_Number = n()) %>%  # Calculating the number of accidents for each group
   arrange(TARIH, desc(Accident_Number))  
-accidents_date_destination
+datatable(accidents_date_destination, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Directions and Accidents on the 5 Dates with the Most Accidents") %>%
+  DT::formatStyle(
+    columns = colnames(accidents_date_destination), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 ```
 
 -   With the help of this code, we have grouped the accidents on the five days with the most accidents according to the date and direction and sorted each date in descending order. and again, as we expected, the first three directions on three of the five days are "Merkez", "Gaziemir", "Bornova", while the remaining two days "Merkez" and "Gaziemir" are in the first two places.
-
-```{r echo=TRUE, include=FALSE}
-library(DT)
-date_list <- accidents_date_destination %>%
-  group_split(TARIH)
-for (i in seq_along(date_list)) {
-  cat("Tarih:", unique(date_list[[i]]$TARIH), "\n")
-  datatable(date_list[[i]], options = list(pageLength = 5, scrollX = TRUE))
-}
-
-```
-
--   Thanks to this interactive table, you can Decipher the distribution of accidents according to directions in the first five days, where the most accidents occurred, by searching as you want.
-
-```{r}
-dates_together <- bind_rows(date_list)
-datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
-```
