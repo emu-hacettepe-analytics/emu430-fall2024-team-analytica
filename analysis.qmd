@@ -4,12 +4,18 @@ title: "Analysis"
 
 About this site
 
-```{r}
+```{r echo=TRUE, include=FALSE}
 library(readxl)
 library(dplyr)
 library(stringr)
 library(lubridate)
+```
+
+```{r echo=TRUE, include=FALSE}
 Sys.setlocale("LC_ALL", "Turkish")
+```
+
+```{r}
 data_new <- read_excel("izbb-kaza-ariza-verileri.xlsx")
 data_2023 <- data_new %>%
   mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d")) %>%  # Changing date format to yyyy-mm-dd 
@@ -137,7 +143,7 @@ accidents_date_destination
 
 -   With the help of this code, we have grouped the accidents on the five days with the most accidents according to the date and direction and sorted each date in descending order. and again, as we expected, the first three directions on three of the five days are "Merkez", "Gaziemir", "Bornova", while the remaining two days "Merkez" and "Gaziemir" are in the first two places.
 
-```{r}
+```{r echo=TRUE, include=FALSE}
 library(DT)
 date_list <- accidents_date_destination %>%
   group_split(TARIH)
@@ -145,8 +151,12 @@ for (i in seq_along(date_list)) {
   cat("Tarih:", unique(date_list[[i]]$TARIH), "\n")
   datatable(date_list[[i]], options = list(pageLength = 5, scrollX = TRUE))
 }
-dates_together <- bind_rows(date_list)
-datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
+
 ```
 
 -   Thanks to this interactive table, you can Decipher the distribution of accidents according to directions in the first five days, where the most accidents occurred, by searching as you want.
+
+```{r}
+dates_together <- bind_rows(date_list)
+datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
+```
