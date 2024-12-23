@@ -89,7 +89,7 @@ print(unique_tur)
 # String edits in accident type names
 
 data_new$TUR <- gsub("maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı", "Maddi Hasarlı", data_new$TUR)
-data_new$TUR <- gsub("Ölümlü", "Ölümlü Kaza", data_new$TUR)
+data_new$TUR <- gsub("Ölümlü|Ölümlü Kaza|Ölümlü Kaza Kaza" , "Ölümlü Kaza", data_new$TUR)
 data_new$TUR <- gsub("Yakıtı Biten", "Yakıt Bitimi", data_new$TUR)
 data_new$TUR <- gsub("Yangın", "Yanan Araç", data_new$TUR)
 data_new$TUR <- gsub("yaralanmalı Kaza", "Yaralanmalı Kaza", data_new$TUR)
@@ -176,7 +176,7 @@ grouped_data <- data_2023 %>%
   group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
   summarise("Total Number of Accidents" = n())
 
-#en yüksek sayılı 10 istikamet
+#en yüksek sayılı 10 istikamet bunun yerine accidents descending oluşturdum
 top_10_accidents <- grouped_data %>%
   arrange(desc("Total Number of Accidents")) %>%
   head(top_10_accidents,10)
@@ -205,7 +205,8 @@ ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Tot
   geom_bar(stat = "identity", fill = "purple", color = "black") +
   coord_flip() +  
   labs(title = "Distribution of Accidents According to Directions (2023)", x = "Destination", y = "Frequency") +
-  theme_minimal()
+  theme_minimal() +
+  theme(axis.text.y = element_text(size = 2))
 
 
 #hangi tarihte kaç kaza olmuş
@@ -306,6 +307,14 @@ dates_together <- bind_rows(date_list)
 # Tabloyu görüntüleme bu süper bi şey oldu
 datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
 
+
+
+library(DT)
+date_list <- accidents_date_destination %>%
+  group_split(TARIH)
+dates_together <- bind_rows(date_list)
+datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
+
 #---
 
 #aysunun
@@ -319,29 +328,7 @@ grouped_data_type <- data_2023 %>%
 sorted_grouped_type_data <- grouped_data_type %>%
   arrange(desc(Accident_Type))
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
-
-
-
-
-
-        
-
-
-        
-       
-        
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 library(dplyr)
 
 data_2023 <- data_2023 %>%
@@ -359,13 +346,36 @@ ggplot(sorted_grouped_type_data, aes(x = reorder(TUR, Accident_Type), y = Accide
   coord_flip() +  
   labs(title = "Distribution of Accidents According to Types (2023)", x = "Accident Types", y = "Frequency") +
   theme_minimal()
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
+
+# İzmir haritasını indir ve yükle
+install.packages("sf")  # Eğer yüklü değilse
+library(sf)
+
+izmir_map <- st_read("https://paintmaps.com/tr/bos-haritalar/41c/ornekler#google_vignette")
+
+# Harita üzerinde veri göstermek için (örnek: kaza noktaları)
+data <- data.frame(
+  lon = c(27.1, 28.9, 29.0),
+  lat = c(38.4, 39.9, 40.1),
+  kazalar = c(10, 15, 20)
+)
+
+library(ggplot2)
+ggplot() +
+  geom_sf(data = izmir_map, fill = "lightblue", color = "white") +
+  geom_point(data = data, aes(x = lon, y = lat, size = kazalar), color = "red") +
+  labs(title = "Kazaların Yoğunluk Haritası", x = "Boylam", y = "Enlem") +
+  theme_minimal()
+
+str(data_new$TARIH)
+head(data_new$TARIH)
+
+data_new <- data_new %>%
+  mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d"))
+str(data_new$TARIH)
+
+rlang::last_trace()
+
+
+
