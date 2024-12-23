@@ -176,7 +176,7 @@ grouped_data <- data_2023 %>%
   group_by(ISTIKAMET) %>%  # İstikamete göre gruplama
   summarise("Total Number of Accidents" = n())
 
-#en yüksek sayılı 10 istikamet
+#en yüksek sayılı 10 istikamet bunun yerine accidents descending oluşturdum
 top_10_accidents <- grouped_data %>%
   arrange(desc("Total Number of Accidents")) %>%
   head(top_10_accidents,10)
@@ -206,7 +206,7 @@ ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Tot
   coord_flip() +  
   labs(title = "Distribution of Accidents According to Directions (2023)", x = "Destination", y = "Frequency") +
   theme_minimal() +
-  theme(axis.text.y = element_text(size = 8))
+  theme(axis.text.y = element_text(size = 2))
 
 
 #hangi tarihte kaç kaza olmuş
@@ -305,6 +305,14 @@ for (i in seq_along(date_list)) {
 dates_together <- bind_rows(date_list)
 
 # Tabloyu görüntüleme bu süper bi şey oldu
+datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
+
+
+
+library(DT)
+date_list <- accidents_date_destination %>%
+  group_split(TARIH)
+dates_together <- bind_rows(date_list)
 datatable(dates_together, options = list(pageLength = 10, scrollX = TRUE))
 
 #---
