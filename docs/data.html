@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data – xxx’ Project Lab</title>
+<title>Data – Analytica’s Project Lab</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -115,7 +115,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">xxx’ Project Lab</span>
+    <span class="navbar-title">Analytica’s Project Lab</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -238,26 +238,23 @@ Attaching package: 'lubridate'</code></pre>
     date, intersect, setdiff, union</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'ggplot2' was built under R version 4.4.2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'DT' was built under R version 4.4.2</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turkish characters detection</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setlocale</span>(<span class="st">"LC_ALL"</span>, <span class="st">"Turkish"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Turkish characters detection</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setlocale</span>(<span class="st">"LC_ALL"</span>, <span class="st">"Turkish"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in Sys.setlocale("LC_ALL", "Turkish"): using locale code page other
 than 65001 ("UTF-8") may cause problems</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the data set</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data_original <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"izbb-kaza-ariza-verileri.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the data set</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>data_original <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"izbb-kaza-ariza-verileri.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_original)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data_original)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 x 7
   TARIH               CADDE            ISTIKAMET KONUM TUR   KAZA_ZAMANI        
@@ -272,7 +269,7 @@ than 65001 ("UTF-8") may cause problems</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_original)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_original)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [17,788 x 7] (S3: tbl_df/tbl/data.frame)
  $ TARIH          : POSIXct[1:17788], format: "2021-12-08" "2021-12-06" ...
@@ -285,9 +282,9 @@ than 65001 ("UTF-8") may cause problems</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many NA in which column?</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(data_original))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many NA in which column?</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(data_original))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          TARIH           CADDE       ISTIKAMET           KONUM             TUR 
               0               0              16              14               0 
@@ -296,16 +293,16 @@ than 65001 ("UTF-8") may cause problems</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete NA ones in the ISTIKAMET column</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_original[<span class="sc">!</span><span class="fu">is.na</span>(data_original<span class="sc">$</span>ISTIKAMET), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete NA ones in the ISTIKAMET column</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_original[<span class="sc">!</span><span class="fu">is.na</span>(data_original<span class="sc">$</span>ISTIKAMET), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See unique destination names</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>unique_istikamet <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>ISTIKAMET))</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_istikamet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See unique destination names</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>unique_istikamet <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>ISTIKAMET))</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_istikamet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] "1. Sanayi"            "5. Sanayi"            "Adliye"              
   [4] "Adnan Kahveci Köprü"  "Akıncılar"            "Alaybey"             
@@ -358,43 +355,43 @@ than 65001 ("UTF-8") may cause problems</code></pre>
 [145] "Yeşilyurt"            "Yıkık Kemer"          "Yıkıkkemer"          
 [148] "Yunuslar"            </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String edits in destination names</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Alsancak|Alsancak İstikameti|Alsancak Gar|alsancak"</span>, <span class="st">"Alsancak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Buca|Buca Heykel"</span>, <span class="st">"Buca"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Konak|Konak Tüneli|Konak İstikameti"</span>, <span class="st">"Konak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Kemalpaşa|kemalpaşa|Kemalpaş"</span>, <span class="st">"Kemalpaşa"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Havalimanı|havalimanı"</span>, <span class="st">"Havalimanı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"İnciraltı|İnciraltı İstikameti"</span>, <span class="st">"İnciraltı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Üçkuyular|Üçkuyular Meydan"</span>, <span class="st">"Üçkuyular"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Sarnıç|Sarniç"</span>, <span class="st">"Sarnıç"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Fahrettin Altay|F.Altay|Fahrettin altay"</span>, <span class="st">"Fahrettin Altay"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Tersane|Tersanesi"</span>, <span class="st">"Tersane"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Otogar|Otogar Meydanı"</span>, <span class="st">"Otogar"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Basmane|Basmane Gar"</span>, <span class="st">"Basmane"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Pınarbaşı|Pınarbaşo"</span>, <span class="st">"Pınarbaşı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Üçyol|üçyol|Üçyo"</span>, <span class="st">"Üçyol"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Karabağlar|karabağlar"</span>, <span class="st">"Karabağlar"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Konak|konak"</span>, <span class="st">"Konak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Gündoğdu|Gündoğdu Mahallesi"</span>, <span class="st">"Gündoğdu"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Mahvel|Mahvel Kavşağı"</span>, <span class="st">"Mahvel"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Beyazevler|Beyaz Evler"</span>, <span class="st">"Beyazevler"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Adliye|Adliye Kavşağı"</span>, <span class="st">"Adliye"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Harmandalı|Harmandali"</span>, <span class="st">"Harmandalı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yıkık Kemer|Yıkıkkemer|Yıkıkker"</span>, <span class="st">"Yıkıkkemer"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Karşıa"</span>, <span class="st">"Karşıyaka"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Liman D Kapısı"</span>, <span class="st">"Liman"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"otogar"</span>, <span class="st">"Otogar"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"bornova"</span>, <span class="st">"Bornova"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Mai"</span>, <span class="st">"Mustafa Kemal Sahil"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Borsa|Borsa Kavşağı"</span>, <span class="st">"Borsa"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Çevre Yolu|Çevreyolu"</span>, <span class="st">"Çevreyolu"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
-<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking destination names</span></span>
-<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>unique_istikamet_new <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>ISTIKAMET))</span>
-<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_istikamet_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String edits in destination names</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Alsancak|Alsancak İstikameti|Alsancak Gar|alsancak"</span>, <span class="st">"Alsancak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Buca|Buca Heykel"</span>, <span class="st">"Buca"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Konak|Konak Tüneli|Konak İstikameti"</span>, <span class="st">"Konak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Kemalpaşa|kemalpaşa|Kemalpaş"</span>, <span class="st">"Kemalpaşa"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Havalimanı|havalimanı"</span>, <span class="st">"Havalimanı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"İnciraltı|İnciraltı İstikameti"</span>, <span class="st">"İnciraltı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Üçkuyular|Üçkuyular Meydan"</span>, <span class="st">"Üçkuyular"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Sarnıç|Sarniç"</span>, <span class="st">"Sarnıç"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Fahrettin Altay|F.Altay|Fahrettin altay"</span>, <span class="st">"Fahrettin Altay"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Tersane|Tersanesi"</span>, <span class="st">"Tersane"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Otogar|Otogar Meydanı"</span>, <span class="st">"Otogar"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Basmane|Basmane Gar"</span>, <span class="st">"Basmane"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Pınarbaşı|Pınarbaşo"</span>, <span class="st">"Pınarbaşı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Üçyol|üçyol|Üçyo"</span>, <span class="st">"Üçyol"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Karabağlar|karabağlar"</span>, <span class="st">"Karabağlar"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Konak|konak"</span>, <span class="st">"Konak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Gündoğdu|Gündoğdu Mahallesi"</span>, <span class="st">"Gündoğdu"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Mahvel|Mahvel Kavşağı"</span>, <span class="st">"Mahvel"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Beyazevler|Beyaz Evler"</span>, <span class="st">"Beyazevler"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Adliye|Adliye Kavşağı"</span>, <span class="st">"Adliye"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Harmandalı|Harmandali"</span>, <span class="st">"Harmandalı"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yıkık Kemer|Yıkıkkemer|Yıkıkker"</span>, <span class="st">"Yıkıkkemer"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Karşıa"</span>, <span class="st">"Karşıyaka"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Liman D Kapısı"</span>, <span class="st">"Liman"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"otogar"</span>, <span class="st">"Otogar"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"bornova"</span>, <span class="st">"Bornova"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Mai"</span>, <span class="st">"Mustafa Kemal Sahil"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Borsa|Borsa Kavşağı"</span>, <span class="st">"Borsa"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Çevre Yolu|Çevreyolu"</span>, <span class="st">"Çevreyolu"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking destination names</span></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>unique_istikamet_new <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>ISTIKAMET))</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_istikamet_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] "1. Sanayi"           "5. Sanayi"           "Adliye"             
   [4] "Adnan Kahveci Köprü" "Akıncılar"           "Alaybey"            
@@ -440,9 +437,9 @@ than 65001 ("UTF-8") may cause problems</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>unique_tur <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>TUR))</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_tur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>unique_tur <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>TUR))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_tur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Adli Vaka"            "Ağır Vasıta"          "Arızalı"             
  [4] "Asfalt Çalışması"     "Aşan Yükseklik"       "Bekleme"             
@@ -455,19 +452,19 @@ than 65001 ("UTF-8") may cause problems</code></pre>
 [25] "yaralanmalı Kaza"     "Yaralanmalı Kaza"     "Yaya Yolu Çalışması" 
 [28] "Yoğun Duman"          "Yol Yapım"            "Zincirleme Kaza"     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String edits in accident type names</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı"</span>, <span class="st">"Maddi Hasarlı"</span>, data_new<span class="sc">$</span>TUR)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Ölümlü"</span>, <span class="st">"Ölümlü Kaza"</span>, data_new<span class="sc">$</span>TUR)</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yakıtı Biten"</span>, <span class="st">"Yakıt Bitimi"</span>, data_new<span class="sc">$</span>TUR)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yangın"</span>, <span class="st">"Yanan Araç"</span>, data_new<span class="sc">$</span>TUR)</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"yaralanmalı Kaza"</span>, <span class="st">"Yaralanmalı Kaza"</span>, data_new<span class="sc">$</span>TUR)</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking accident type names</span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>unique_tur_new <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>TUR))</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_tur_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String edits in accident type names</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı"</span>, <span class="st">"Maddi Hasarlı"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Ölümlü"</span>, <span class="st">"Ölümlü Kaza"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yakıtı Biten"</span>, <span class="st">"Yakıt Bitimi"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yangın"</span>, <span class="st">"Yanan Araç"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"yaralanmalı Kaza"</span>, <span class="st">"Yaralanmalı Kaza"</span>, data_new<span class="sc">$</span>TUR)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking accident type names</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>unique_tur_new <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>TUR))</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(unique_tur_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Adli Vaka"            "Ağır Vasıta"          "Arızalı"             
  [4] "Asfalt Çalışması"     "Aşan Yükseklik"       "Bekleme"             
@@ -481,53 +478,53 @@ than 65001 ("UTF-8") may cause problems</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of data for each destination</span></span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of data for each destination</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ISTIKAMET) <span class="sc">%&gt;%</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finding direction values with less than 5 data</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ISTIKAMET) <span class="sc">%&gt;%</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>istikamet_to_remove <span class="ot">&lt;-</span> counts <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(count <span class="sc">&lt;</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(ISTIKAMET)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete them from the data set</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>ISTIKAMET <span class="sc">%in%</span> istikamet_to_remove)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finding direction values with less than 5 data</span></span>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the time between accident time and intervention time and add it as a new column</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>istikamet_to_remove <span class="ot">&lt;-</span> counts <span class="sc">%&gt;%</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(count <span class="sc">&lt;</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(ISTIKAMET)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>GECEN_SURE <span class="ot">&lt;-</span> <span class="fu">difftime</span>(data_new<span class="sc">$</span>MUDAHALE_ZAMANI, data_new<span class="sc">$</span>KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking into account the day difference for interventions arriving after midnight</span></span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete them from the data set</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>ISTIKAMET <span class="sc">%in%</span> istikamet_to_remove)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">GECEN_SURE =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>      MUDAHALE_ZAMANI <span class="sc">&lt;</span> KAZA_ZAMANI, </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">difftime</span>(MUDAHALE_ZAMANI <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>), KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>),</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">difftime</span>(MUDAHALE_ZAMANI, KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the time between accident time and intervention time and add it as a new column</span></span>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the average response time for each destination</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>GECEN_SURE <span class="ot">&lt;-</span> <span class="fu">difftime</span>(data_new<span class="sc">$</span>MUDAHALE_ZAMANI, data_new<span class="sc">$</span>KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Taking into account the day difference for interventions arriving after midnight</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ISTIKAMET) <span class="sc">%&gt;%</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ORTALAMA_GECEN_SURE =</span> <span class="fu">mean</span>(GECEN_SURE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">GECEN_SURE =</span> <span class="fu">ifelse</span>(</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>      MUDAHALE_ZAMANI <span class="sc">&lt;</span> KAZA_ZAMANI, </span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">difftime</span>(MUDAHALE_ZAMANI <span class="sc">+</span> <span class="fu">days</span>(<span class="dv">1</span>), KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>),</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>      <span class="fu">difftime</span>(MUDAHALE_ZAMANI, KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>)</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the average response time for each destination</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ISTIKAMET) <span class="sc">%&gt;%</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ORTALAMA_GECEN_SURE =</span> <span class="fu">mean</span>(GECEN_SURE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill each NA value for GECEN_SURE with the average time of the direction it is connected to</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GECEN_SURE =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(GECEN_SURE), ORTALAMA_GECEN_SURE, GECEN_SURE))</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(data_new<span class="sc">$</span>GECEN_SURE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill each NA value for GECEN_SURE with the average time of the direction it is connected to</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GECEN_SURE =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(GECEN_SURE), ORTALAMA_GECEN_SURE, GECEN_SURE))</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(data_new<span class="sc">$</span>GECEN_SURE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
