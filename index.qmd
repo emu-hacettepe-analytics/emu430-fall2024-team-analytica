@@ -50,3 +50,5 @@ This project demonstrates how open data can serve as a powerful tool for address
 # Data Set
 
 [İzmir Metropolitan Municipality Defective, Accident Vehicle Data](https://acikveri.bizizmir.com/dataset/7373e9b2-bdbe-4957-b980-b81329974bb2/resource/e4832801-ccfe-4e29-8a14-5c7d63545984/download/izbb-kaza-ariza-verileri.xlsx){.btn .btn-danger style="color: white"}
+
+# Project Teaser
