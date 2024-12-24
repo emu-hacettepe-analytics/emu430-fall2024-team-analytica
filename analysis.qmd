@@ -66,8 +66,7 @@ datatable(grouped_data_2,
   )
 ```
 
--   By making a grouping of the accidents that took place in 2023 according to the
-    directions, we examined how many accidents were made in which direction.
+-   By making a grouping of the accidents that took place in 2023 according to the directions, we examined how many accidents were made in which direction.
 
 ```{r}
 sorted_grouped_data <- grouped_data_2 %>%
