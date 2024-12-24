@@ -21,7 +21,7 @@ This is our template.
 
 4.  [Aysu Soylu](https://emu-hacettepe-analytics.github.io/emu430-fall2024-aysusoylu/){.btn .btn-danger style="color: white"}
 
-5.  [İsim Soyisim](http://analytics-lab-link.com){.btn .btn-danger style="color: white"}
+5.  [Tuba Kızgın](https://emu-hacettepe-analytics.github.io/emu430-fall2024-tubikzgn/){.btn .btn-danger style="color: white"}
 
 6.  [Arzu Alakel](https://emu-hacettepe-analytics.github.io/emu430-fall2024-arzualakel/){.btn .btn-danger style="color: white"}
 
