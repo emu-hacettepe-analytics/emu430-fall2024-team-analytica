@@ -173,7 +173,7 @@ ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Tot
   coord_flip() +  
   labs(title = "Distribution of Accidents According to Directions (2023)", x = "Direction", y = "Frequency") +
   theme_minimal() +
-  theme(axis.text.y = element_text(size = 5))
+  theme(axis.text.y = element_text(size = 6))
 
 ```
 
