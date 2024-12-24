@@ -17,8 +17,7 @@ website:
             
     tools:
       - icon: github
-        href: https://twitter.com
-
+        href: https://github.com/emu-hacettepe-analytics/emu430-fall2024-team-analytica
   page-navigation: true
   back-to-top-navigation: true
   page-footer:
@@ -26,6 +25,7 @@ website:
     border: true
 format:
   html:
+    code-fold: true
     toc: true
     toc-location: left
     theme: 

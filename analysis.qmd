@@ -15,6 +15,8 @@ library(DT)
 Sys.setlocale("LC_ALL", "Turkish")
 ```
 
+## ANALYSIS OF THE DATA SET
+
 ```{r}
 data_new <- read_excel("izbb-kaza-ariza-verileri.xlsx")
 data_2023 <- data_new %>%
@@ -39,7 +41,7 @@ datatable(data_2023,
   )
 ```
 
--   By using the "data_new" dataset, we created the "data_2023".In this data set, we can see the accidents that occurred in 2023 filtered.
+-   By using the "data_new" data set, we created the "data_2023".In this data set, we can see the accidents that occurred in 2023 filtered.
 
 ```{r}
 data_2023 <- data_2023 %>%
@@ -268,3 +270,99 @@ datatable(accidents_date_destination,
 ```
 
 -   With the help of this code, we have grouped the accidents on the five days with the most accidents according to the date and direction and sorted each date in descending order. and again, as we expected, the first three directions on three of the five days are "Merkez", "Gaziemir", "Bornova", while the remaining two days "Merkez" and "Gaziemir" are in the first two places.
+
+-   By utilizing the data we obtained, we analyzed how response times vary based on destinations and types of accidents, as well as how many accidents are distributed across destinations and time of day.
+
+-   The Response Time By Destinations plot analyzes response times at different destinations, providing important information on median, average and variability.
+
+```{r}
+library(ggplot2)
+
+ggplot(data_2023, aes(x = ISTIKAMET, y = GECEN_SURE)) +
+  geom_boxplot(fill = "lightblue", color = "darkblue", outlier.color = "red", outlier.size = 2) +
+  labs(
+    title = "Response Time By Destinations",
+    x = "Destination",
+    y = "Response Time"
+  ) +
+  theme_minimal() + 
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    axis.text = element_text(size = 10)
+  )
+```
+
+-   When we examine the plot, the average response time of most destinations is concentrated between 20-30 minutes, which shows general effective responses."Heykel," "Çeşme," and "Göztepe" show consistent distributions and predictable response times, demonstrating operational stability."Buca" and "Havalimanı" have wider distributions and higher averages, reflecting delays and inconsistencies."Merkez" exhibits significant variability and outliers, leading to increased average response times.
+
+-   We examined the distribution of average response time according to accident types with a violin plot.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+data_2023 <- data_2023 %>%
+  mutate(TUR = case_when(
+    TUR %in% c("Ölümlü Kaza Kaza Kaza Kaza Kaza", "Ölümlü Kaza Kaza Kaza Kaza Kaza Kaza") ~ "Ölümlü Kaza",
+    TRUE ~ TUR  
+  ))
+
+ggplot(data_2023, aes(x = TUR, y = ORTALAMA_GECEN_SURE)) +
+  geom_violin(fill = "lightgreen", color = "darkgreen") +
+  labs(
+    title = "Average Response Time By Accident Types",
+    x = "Accident Type",
+    y = "Average Response Time"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold")
+  )  
+```
+
+-   Most accident types have response times concentrated between 20–30 minutes, indicating operational efficiency. Accidents like "Arızalı," "Yakıt Bitimi," and "Patlak Lastik" show the shortest and most consistent response times, with violin plots densely concentrated at lower durations. "Ölümlü Kaza" stands out with longer response times and broader distributions, reflecting the complexity of these cases."Yaralanmalı Kaza" has the widest distribution, indicating varied response times and highlighting areas for improvement in consistency.
+
+-   We examined the distribution of accidents according to destinations during the day using a heatmap chart.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+
+data_2023 <- data_2023 %>%
+  mutate(
+    HOUR = hour(as.POSIXct(KAZA_ZAMANI)), 
+    TIME_PERIOD = ifelse(HOUR >= 8 & HOUR < 20, "Day (8 AM - 8 PM)", "Night (8 PM - 8 AM)")  
+  )
+
+heatmap_data <- data_2023 %>%
+  group_by(ISTIKAMET, HOUR) %>%
+  summarise(kaza_sayisi = n(), .groups = "drop") 
+
+# Heatmap oluşturma
+ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
+  geom_tile(color = "white") +  # Hücreler arasına beyaz çizgi
+  scale_fill_gradientn(
+    colors = c("lightblue", "yellow", "red"),
+    name = "Number of Accidents"
+  ) +  # Renk skalasını belirle
+  labs(
+    title = "Accidents Throughout the Day by Destination",
+    subtitle = "Comparison of accident numbers across hours and destinations",
+    x = "Hour of the Day",
+    y = "Destination"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 16),  
+    plot.subtitle = element_text(hjust = 0.5, size = 12),  
+    axis.text.x = element_text(size = 10),  
+    axis.text.y = element_text(size = 8), 
+    legend.position = "right",  
+    legend.text = element_text(size = 10),  
+    legend.title = element_text(size = 12) 
+  )
+```
+
+-   Certain times of the day (e.g., morning and evening commute hours) show increased accident intensity in specific destinations. Destinations such as "Bornova", "Gaziemir", and "Merkez" show high accident intensity. The red zones in these areas indicate a higher number of accidents, especially during the morning and evening rush hours. Destinations such as "Tersane", "Göztepe", and "Heykel" have fewer accidents and a more evenly distributed pattern.
