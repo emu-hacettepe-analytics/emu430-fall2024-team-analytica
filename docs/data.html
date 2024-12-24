@@ -223,13 +223,18 @@ library(DT)            # For user interaction</code></pre>
 <section id="data-loading-and-general-informations" class="level2">
 <h2 class="anchored" data-anchor-id="data-loading-and-general-informations"><strong>DATA LOADING AND GENERAL INFORMATIONS</strong></h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the data set</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data_original <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"izbb-kaza-ariza-verileri.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <ul>
 <li>First, we read our data containing the accident data with the read_excel function.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(data_original), <span class="at">options =</span> <span class="fu">list</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pageLength =</span> <span class="dv">10</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dom =</span> <span class="st">'t'</span></span>
@@ -239,16 +244,20 @@ library(DT)            # For user interaction</code></pre>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontSize =</span> <span class="st">'9px'</span>,        </span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="st">'1px'</span>          </span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-e1d063a0e8dbf71831d2" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-e1d063a0e8dbf71831d2">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2021-12-08T00:00:00Z","2021-12-06T00:00:00Z","2021-12-09T00:00:00Z","2021-12-09T00:00:00Z","2021-12-15T00:00:00Z","2021-12-17T00:00:00Z"],["Havalimanı Şoşesi","Akçay Caddesi","Akçay Caddesi","Akçay Caddesi","Yeşillik Caddesi","Akçay Caddesi"],["Evka-5","Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı"],["Harmandalı Meydanı","Esbaş Alt Geçit","Sarnıç Alt Geçit Üzeri","Serbest Bölge Alt Geçit Öncesi","Paşa Köprü Mezarlık","Esbaş"],["Maddi Hasarlı","Arızalı","Maddi Hasarlı","Arızalı","Arızalı","Maddi Hasarlı"],["1899-12-31T17:57:00Z","1899-12-31T07:27:00Z","1899-12-31T07:54:00Z","1899-12-31T07:57:00Z","1899-12-31T11:57:00Z","1899-12-31T08:02:00Z"],["1899-12-31T18:14:00Z","1899-12-31T07:41:00Z","1899-12-31T08:03:00Z","1899-12-31T08:05:00Z","1899-12-31T12:33:00Z","1899-12-31T08:21:00Z"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TARIH<\/th>\n      <th>CADDE<\/th>\n      <th>ISTIKAMET<\/th>\n      <th>KONUM<\/th>\n      <th>TUR<\/th>\n      <th>KAZA_ZAMANI<\/th>\n      <th>MUDAHALE_ZAMANI<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"dom":"t","columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"TARIH","targets":1},{"name":"CADDE","targets":2},{"name":"ISTIKAMET","targets":3},{"name":"KONUM","targets":4},{"name":"TUR","targets":5},{"name":"KAZA_ZAMANI","targets":6},{"name":"MUDAHALE_ZAMANI","targets":7}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'9px','padding':'1px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-4c0807ce8836b6493327" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4c0807ce8836b6493327">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2021-12-08T00:00:00Z","2021-12-06T00:00:00Z","2021-12-09T00:00:00Z","2021-12-09T00:00:00Z","2021-12-15T00:00:00Z","2021-12-17T00:00:00Z"],["Havalimanı Şoşesi","Akçay Caddesi","Akçay Caddesi","Akçay Caddesi","Yeşillik Caddesi","Akçay Caddesi"],["Evka-5","Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı"],["Harmandalı Meydanı","Esbaş Alt Geçit","Sarnıç Alt Geçit Üzeri","Serbest Bölge Alt Geçit Öncesi","Paşa Köprü Mezarlık","Esbaş"],["Maddi Hasarlı","Arızalı","Maddi Hasarlı","Arızalı","Arızalı","Maddi Hasarlı"],["1899-12-31T17:57:00Z","1899-12-31T07:27:00Z","1899-12-31T07:54:00Z","1899-12-31T07:57:00Z","1899-12-31T11:57:00Z","1899-12-31T08:02:00Z"],["1899-12-31T18:14:00Z","1899-12-31T07:41:00Z","1899-12-31T08:03:00Z","1899-12-31T08:05:00Z","1899-12-31T12:33:00Z","1899-12-31T08:21:00Z"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TARIH<\/th>\n      <th>CADDE<\/th>\n      <th>ISTIKAMET<\/th>\n      <th>KONUM<\/th>\n      <th>TUR<\/th>\n      <th>KAZA_ZAMANI<\/th>\n      <th>MUDAHALE_ZAMANI<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"dom":"t","columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"TARIH","targets":1},{"name":"CADDE","targets":2},{"name":"ISTIKAMET","targets":3},{"name":"KONUM","targets":4},{"name":"TUR","targets":5},{"name":"KAZA_ZAMANI","targets":6},{"name":"MUDAHALE_ZAMANI","targets":7}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'9px','padding':'1px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 </div>
 <ul>
 <li>Here we see the first rows of our dataset. As stated in the table on the previous page, the columns indicate date, street, direction, location, type, accident time and intervention time, respectively.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(data_original)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [17,788 x 7] (S3: tbl_df/tbl/data.frame)
  $ TARIH          : POSIXct[1:17788], format: "2021-12-08" "2021-12-06" ...
@@ -264,9 +273,12 @@ library(DT)            # For user interaction</code></pre>
 <li>Here we see general information about the dataframe. Our data has 7 columns and 17,788 rows. Street, direction, location and type columns are in character data type, date, accident time and intervention time columns are in POSIXct date data type.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># How many NA in which column?</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(data_original))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>          TARIH           CADDE       ISTIKAMET           KONUM             TUR 
               0               0              16              14               0 
@@ -281,26 +293,35 @@ library(DT)            # For user interaction</code></pre>
 <section id="na-and-string-processing" class="level2">
 <h2 class="anchored" data-anchor-id="na-and-string-processing">NA AND STRING PROCESSING</h2>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Delete NA ones in the ISTIKAMET column</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_original[<span class="sc">!</span><span class="fu">is.na</span>(data_original<span class="sc">$</span>ISTIKAMET), ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <ul>
 <li>With this code we deleted all 16 NA values ​​in the direction column.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See unique destination names</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>unique_istikamet <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>ISTIKAMET))</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">sort</span>(unique_istikamet),<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "1. Sanayi"           "5. Sanayi"           "Adliye"             
  [4] "Adnan Kahveci Köprü" "Akıncılar"           "Alaybey"            
  [7] "alsancak"            "Alsancak"            "Alsancak Gar"       
 [10] "Alsancak İstikameti"</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(unique_istikamet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 148</code></pre>
 </div>
@@ -309,6 +330,8 @@ library(DT)            # For user interaction</code></pre>
 <li>As seen above, there are 148 different direction values ​​in our data set. Among these, there are values ​​such as “Alsancak”, “Alsancak Gar” and “Alsancak İstikameti” that are written differently but describe the same place.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String edits in destination names</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Alsancak|Alsancak İstikameti|Alsancak Gar|alsancak"</span>, <span class="st">"Alsancak"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
@@ -340,23 +363,30 @@ library(DT)            # For user interaction</code></pre>
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Mai"</span>, <span class="st">"Mustafa Kemal Sahil"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
 <span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Borsa|Borsa Kavşağı"</span>, <span class="st">"Borsa"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span>
 <span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>ISTIKAMET <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Çevre Yolu|Çevreyolu"</span>, <span class="st">"Çevreyolu"</span>, data_new<span class="sc">$</span>ISTIKAMET)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <ul>
 <li>In this way, a string arrangement was made using the gsub function to collect similar or misspelled destination names into a single form.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking destination names</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>unique_istikamet_new <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>ISTIKAMET))</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">sort</span>(unique_istikamet_new),<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "1. Sanayi"           "5. Sanayi"           "Adliye"             
  [4] "Adnan Kahveci Köprü" "Akıncılar"           "Alaybey"            
  [7] "Alsancak"            "Altındağ"            "Altınyol"           
 [10] "Anıt"               </code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(unique_istikamet_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 123</code></pre>
 </div>
@@ -365,18 +395,24 @@ library(DT)            # For user interaction</code></pre>
 <li>As a result of this process, the number of unique direction values ​​​​has decreased to 123.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># see unique accident type names</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>unique_tur <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>TUR))</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">sort</span>(unique_tur),<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Adli Vaka"            "Ağır Vasıta"          "Arızalı"             
  [4] "Asfalt Çalışması"     "Aşan Yükseklik"       "Bekleme"             
  [7] "Futbol Maçı"          "Heyelan"              "İzsu Çalışması"      
 [10] "Konteynır Devrilmesi"</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(unique_tur)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 30</code></pre>
 </div>
@@ -385,6 +421,8 @@ library(DT)            # For user interaction</code></pre>
 <li>The same process was done for accident types. As seen here, there are 30 unique accident type names. These include similar expressions such as “maddi Hasarlı”, “Maddi Hasarlı”.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># String edits in accident type names</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı"</span>, <span class="st">"Maddi Hasarlı"</span>, data_new<span class="sc">$</span>TUR)</span>
@@ -392,23 +430,30 @@ library(DT)            # For user interaction</code></pre>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yakıtı Biten"</span>, <span class="st">"Yakıt Bitimi"</span>, data_new<span class="sc">$</span>TUR)</span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"Yangın"</span>, <span class="st">"Yanan Araç"</span>, data_new<span class="sc">$</span>TUR)</span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>TUR <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"yaralanmalı Kaza"</span>, <span class="st">"Yaralanmalı Kaza"</span>, data_new<span class="sc">$</span>TUR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <ul>
 <li>Similar expressions are again replaced with the gsub function.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Checking accident type names</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>unique_tur_new <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(data_new<span class="sc">$</span>TUR))</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">sort</span>(unique_tur_new),<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "Adli Vaka"            "Ağır Vasıta"          "Arızalı"             
  [4] "Asfalt Çalışması"     "Aşan Yükseklik"       "Bekleme"             
  [7] "Futbol Maçı"          "Heyelan"              "İzsu Çalışması"      
 [10] "Konteynır Devrilmesi"</code></pre>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(unique_tur_new)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 24</code></pre>
 </div>
@@ -417,6 +462,8 @@ library(DT)            # For user interaction</code></pre>
 <li>As a result of this process, the number of unique accident types decreased to 24.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the number of data for each destination</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
@@ -443,15 +490,18 @@ library(DT)            # For user interaction</code></pre>
 <span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontSize =</span> <span class="st">'9px'</span>,        </span>
 <span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="st">'1px'</span>          </span>
 <span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-feb77abfe37dd0d62830" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-feb77abfe37dd0d62830">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2021-12-06T00:00:00Z","2021-12-09T00:00:00Z","2021-12-09T00:00:00Z","2021-12-15T00:00:00Z","2021-12-17T00:00:00Z","2021-12-17T00:00:00Z"],["Akçay Caddesi","Akçay Caddesi","Akçay Caddesi","Yeşillik Caddesi","Akçay Caddesi","Akçay Caddesi"],["Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı"],["Esbaş Alt Geçit","Sarnıç Alt Geçit Üzeri","Serbest Bölge Alt Geçit Öncesi","Paşa Köprü Mezarlık","Esbaş","Esbaş"],["Arızalı","Maddi Hasarlı","Arızalı","Arızalı","Maddi Hasarlı","Maddi Hasarlı"],["1899-12-31T07:27:00Z","1899-12-31T07:54:00Z","1899-12-31T07:57:00Z","1899-12-31T11:57:00Z","1899-12-31T08:02:00Z","1899-12-31T08:02:00Z"],["1899-12-31T07:41:00Z","1899-12-31T08:03:00Z","1899-12-31T08:05:00Z","1899-12-31T12:33:00Z","1899-12-31T08:21:00Z","1899-12-31T08:21:00Z"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TARIH<\/th>\n      <th>CADDE<\/th>\n      <th>ISTIKAMET<\/th>\n      <th>KONUM<\/th>\n      <th>TUR<\/th>\n      <th>KAZA_ZAMANI<\/th>\n      <th>MUDAHALE_ZAMANI<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"dom":"t","columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"TARIH","targets":1},{"name":"CADDE","targets":2},{"name":"ISTIKAMET","targets":3},{"name":"KONUM","targets":4},{"name":"TUR","targets":5},{"name":"KAZA_ZAMANI","targets":6},{"name":"MUDAHALE_ZAMANI","targets":7}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'9px','padding':'1px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-e68e9f4e0a7c2414ba4e" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-e68e9f4e0a7c2414ba4e">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2021-12-06T00:00:00Z","2021-12-09T00:00:00Z","2021-12-09T00:00:00Z","2021-12-15T00:00:00Z","2021-12-17T00:00:00Z","2021-12-17T00:00:00Z"],["Akçay Caddesi","Akçay Caddesi","Akçay Caddesi","Yeşillik Caddesi","Akçay Caddesi","Akçay Caddesi"],["Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı"],["Esbaş Alt Geçit","Sarnıç Alt Geçit Üzeri","Serbest Bölge Alt Geçit Öncesi","Paşa Köprü Mezarlık","Esbaş","Esbaş"],["Arızalı","Maddi Hasarlı","Arızalı","Arızalı","Maddi Hasarlı","Maddi Hasarlı"],["1899-12-31T07:27:00Z","1899-12-31T07:54:00Z","1899-12-31T07:57:00Z","1899-12-31T11:57:00Z","1899-12-31T08:02:00Z","1899-12-31T08:02:00Z"],["1899-12-31T07:41:00Z","1899-12-31T08:03:00Z","1899-12-31T08:05:00Z","1899-12-31T12:33:00Z","1899-12-31T08:21:00Z","1899-12-31T08:21:00Z"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TARIH<\/th>\n      <th>CADDE<\/th>\n      <th>ISTIKAMET<\/th>\n      <th>KONUM<\/th>\n      <th>TUR<\/th>\n      <th>KAZA_ZAMANI<\/th>\n      <th>MUDAHALE_ZAMANI<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"dom":"t","columnDefs":[{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"TARIH","targets":1},{"name":"CADDE","targets":2},{"name":"ISTIKAMET","targets":3},{"name":"KONUM","targets":4},{"name":"TUR","targets":5},{"name":"KAZA_ZAMANI","targets":6},{"name":"MUDAHALE_ZAMANI","targets":7}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'9px','padding':'1px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 </div>
 <ul>
 <li>Then, the data set was grouped according to the direction and the number of rows of data for each direction was found. Then, the directions with less than 5 data were determined and removed from the data set. As a result of the operations, there are 17,656 rows in the data set named data_new.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the time between accident time and intervention time and add it as a new column</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>data_new<span class="sc">$</span>GECEN_SURE <span class="ot">&lt;-</span> <span class="fu">difftime</span>(data_new<span class="sc">$</span>MUDAHALE_ZAMANI, data_new<span class="sc">$</span>KAZA_ZAMANI, <span class="at">units =</span> <span class="st">"mins"</span>)</span>
@@ -476,15 +526,18 @@ library(DT)            # For user interaction</code></pre>
 <span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontSize =</span> <span class="st">'9px'</span>,        </span>
 <span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="st">'1px'</span>          </span>
 <span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-4cee187f6ca5429b14a6" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-4cee187f6ca5429b14a6">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2021-12-06T00:00:00Z","2021-12-09T00:00:00Z","2021-12-09T00:00:00Z","2021-12-15T00:00:00Z","2021-12-17T00:00:00Z","2021-12-17T00:00:00Z"],["Akçay Caddesi","Akçay Caddesi","Akçay Caddesi","Yeşillik Caddesi","Akçay Caddesi","Akçay Caddesi"],["Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı"],["Esbaş Alt Geçit","Sarnıç Alt Geçit Üzeri","Serbest Bölge Alt Geçit Öncesi","Paşa Köprü Mezarlık","Esbaş","Esbaş"],["Arızalı","Maddi Hasarlı","Arızalı","Arızalı","Maddi Hasarlı","Maddi Hasarlı"],["1899-12-31T07:27:00Z","1899-12-31T07:54:00Z","1899-12-31T07:57:00Z","1899-12-31T11:57:00Z","1899-12-31T08:02:00Z","1899-12-31T08:02:00Z"],["1899-12-31T07:41:00Z","1899-12-31T08:03:00Z","1899-12-31T08:05:00Z","1899-12-31T12:33:00Z","1899-12-31T08:21:00Z","1899-12-31T08:21:00Z"],[14,9,8,36,19,19]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TARIH<\/th>\n      <th>CADDE<\/th>\n      <th>ISTIKAMET<\/th>\n      <th>KONUM<\/th>\n      <th>TUR<\/th>\n      <th>KAZA_ZAMANI<\/th>\n      <th>MUDAHALE_ZAMANI<\/th>\n      <th>GECEN_SURE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"dom":"t","columnDefs":[{"className":"dt-right","targets":8},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"TARIH","targets":1},{"name":"CADDE","targets":2},{"name":"ISTIKAMET","targets":3},{"name":"KONUM","targets":4},{"name":"TUR","targets":5},{"name":"KAZA_ZAMANI","targets":6},{"name":"MUDAHALE_ZAMANI","targets":7},{"name":"GECEN_SURE","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'9px','padding':'1px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-cb6d939ee190855a66f9" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-cb6d939ee190855a66f9">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2021-12-06T00:00:00Z","2021-12-09T00:00:00Z","2021-12-09T00:00:00Z","2021-12-15T00:00:00Z","2021-12-17T00:00:00Z","2021-12-17T00:00:00Z"],["Akçay Caddesi","Akçay Caddesi","Akçay Caddesi","Yeşillik Caddesi","Akçay Caddesi","Akçay Caddesi"],["Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı"],["Esbaş Alt Geçit","Sarnıç Alt Geçit Üzeri","Serbest Bölge Alt Geçit Öncesi","Paşa Köprü Mezarlık","Esbaş","Esbaş"],["Arızalı","Maddi Hasarlı","Arızalı","Arızalı","Maddi Hasarlı","Maddi Hasarlı"],["1899-12-31T07:27:00Z","1899-12-31T07:54:00Z","1899-12-31T07:57:00Z","1899-12-31T11:57:00Z","1899-12-31T08:02:00Z","1899-12-31T08:02:00Z"],["1899-12-31T07:41:00Z","1899-12-31T08:03:00Z","1899-12-31T08:05:00Z","1899-12-31T12:33:00Z","1899-12-31T08:21:00Z","1899-12-31T08:21:00Z"],[14,9,8,36,19,19]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TARIH<\/th>\n      <th>CADDE<\/th>\n      <th>ISTIKAMET<\/th>\n      <th>KONUM<\/th>\n      <th>TUR<\/th>\n      <th>KAZA_ZAMANI<\/th>\n      <th>MUDAHALE_ZAMANI<\/th>\n      <th>GECEN_SURE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"dom":"t","columnDefs":[{"className":"dt-right","targets":8},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"TARIH","targets":1},{"name":"CADDE","targets":2},{"name":"ISTIKAMET","targets":3},{"name":"KONUM","targets":4},{"name":"TUR","targets":5},{"name":"KAZA_ZAMANI","targets":6},{"name":"MUDAHALE_ZAMANI","targets":7},{"name":"GECEN_SURE","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'9px','padding':'1px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 </div>
 <ul>
 <li>Later, a new column named GECEN_SURE was added to the data set and in this row, the difference between the accident time and the intervention time was specified in minutes. There is also a section in the code to prevent the result from being negative in interventions after midnight.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the average response time for each destination</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> data_new <span class="sc">%&gt;%</span></span>
@@ -497,6 +550,7 @@ library(DT)            # For user interaction</code></pre>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">GECEN_SURE =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(GECEN_SURE), ORTALAMA_GECEN_SURE, GECEN_SURE))</span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(data_new<span class="sc">$</span>GECEN_SURE))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
@@ -505,6 +559,8 @@ library(DT)            # For user interaction</code></pre>
 <li>Then, the average of the elapsed time values ​​for each direction was found and added to the data as a new column named ORTALAMA_GECEN_SURE. Then, each NA value in the GECEN_SURE column was filled with the average time of the direction it belonged to. As a result of this process, it is seen that there is no empty data left in this column.</li>
 </ul>
 <div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(<span class="fu">head</span>(data_new), <span class="at">options =</span> <span class="fu">list</span>(</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">pageLength =</span> <span class="dv">10</span>,</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">dom =</span> <span class="st">'t'</span></span>
@@ -514,9 +570,10 @@ library(DT)            # For user interaction</code></pre>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontSize =</span> <span class="st">'9px'</span>,        </span>
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">padding =</span> <span class="st">'1px'</span>          </span>
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div class="datatables html-widget html-fill-item" id="htmlwidget-727b3c0b1b069062335d" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-727b3c0b1b069062335d">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2021-12-06T00:00:00Z","2021-12-09T00:00:00Z","2021-12-09T00:00:00Z","2021-12-15T00:00:00Z","2021-12-17T00:00:00Z","2021-12-17T00:00:00Z"],["Akçay Caddesi","Akçay Caddesi","Akçay Caddesi","Yeşillik Caddesi","Akçay Caddesi","Akçay Caddesi"],["Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı"],["Esbaş Alt Geçit","Sarnıç Alt Geçit Üzeri","Serbest Bölge Alt Geçit Öncesi","Paşa Köprü Mezarlık","Esbaş","Esbaş"],["Arızalı","Maddi Hasarlı","Arızalı","Arızalı","Maddi Hasarlı","Maddi Hasarlı"],["1899-12-31T07:27:00Z","1899-12-31T07:54:00Z","1899-12-31T07:57:00Z","1899-12-31T11:57:00Z","1899-12-31T08:02:00Z","1899-12-31T08:02:00Z"],["1899-12-31T07:41:00Z","1899-12-31T08:03:00Z","1899-12-31T08:05:00Z","1899-12-31T12:33:00Z","1899-12-31T08:21:00Z","1899-12-31T08:21:00Z"],[14,9,8,36,19,19],[22.92764378478664,22.92764378478664,22.92764378478664,22.92764378478664,22.92764378478664,22.92764378478664]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TARIH<\/th>\n      <th>CADDE<\/th>\n      <th>ISTIKAMET<\/th>\n      <th>KONUM<\/th>\n      <th>TUR<\/th>\n      <th>KAZA_ZAMANI<\/th>\n      <th>MUDAHALE_ZAMANI<\/th>\n      <th>GECEN_SURE<\/th>\n      <th>ORTALAMA_GECEN_SURE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"dom":"t","columnDefs":[{"className":"dt-right","targets":[8,9]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"TARIH","targets":1},{"name":"CADDE","targets":2},{"name":"ISTIKAMET","targets":3},{"name":"KONUM","targets":4},{"name":"TUR","targets":5},{"name":"KAZA_ZAMANI","targets":6},{"name":"MUDAHALE_ZAMANI","targets":7},{"name":"GECEN_SURE","targets":8},{"name":"ORTALAMA_GECEN_SURE","targets":9}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'9px','padding':'1px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-901d99299bce78c0a166" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-901d99299bce78c0a166">{"x":{"filter":"none","vertical":false,"data":[["1","2","3","4","5","6"],["2021-12-06T00:00:00Z","2021-12-09T00:00:00Z","2021-12-09T00:00:00Z","2021-12-15T00:00:00Z","2021-12-17T00:00:00Z","2021-12-17T00:00:00Z"],["Akçay Caddesi","Akçay Caddesi","Akçay Caddesi","Yeşillik Caddesi","Akçay Caddesi","Akçay Caddesi"],["Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı","Havalimanı"],["Esbaş Alt Geçit","Sarnıç Alt Geçit Üzeri","Serbest Bölge Alt Geçit Öncesi","Paşa Köprü Mezarlık","Esbaş","Esbaş"],["Arızalı","Maddi Hasarlı","Arızalı","Arızalı","Maddi Hasarlı","Maddi Hasarlı"],["1899-12-31T07:27:00Z","1899-12-31T07:54:00Z","1899-12-31T07:57:00Z","1899-12-31T11:57:00Z","1899-12-31T08:02:00Z","1899-12-31T08:02:00Z"],["1899-12-31T07:41:00Z","1899-12-31T08:03:00Z","1899-12-31T08:05:00Z","1899-12-31T12:33:00Z","1899-12-31T08:21:00Z","1899-12-31T08:21:00Z"],[14,9,8,36,19,19],[22.92764378478664,22.92764378478664,22.92764378478664,22.92764378478664,22.92764378478664,22.92764378478664]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>TARIH<\/th>\n      <th>CADDE<\/th>\n      <th>ISTIKAMET<\/th>\n      <th>KONUM<\/th>\n      <th>TUR<\/th>\n      <th>KAZA_ZAMANI<\/th>\n      <th>MUDAHALE_ZAMANI<\/th>\n      <th>GECEN_SURE<\/th>\n      <th>ORTALAMA_GECEN_SURE<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"dom":"t","columnDefs":[{"className":"dt-right","targets":[8,9]},{"orderable":false,"targets":0},{"name":" ","targets":0},{"name":"TARIH","targets":1},{"name":"CADDE","targets":2},{"name":"ISTIKAMET","targets":3},{"name":"KONUM","targets":4},{"name":"TUR","targets":5},{"name":"KAZA_ZAMANI","targets":6},{"name":"MUDAHALE_ZAMANI","targets":7},{"name":"GECEN_SURE","targets":8},{"name":"ORTALAMA_GECEN_SURE","targets":9}],"order":[],"autoWidth":false,"orderClasses":false,"rowCallback":"function(row, data, displayNum, displayIndex, dataIndex) {\nvar value=data[1]; $(this.api().cell(row, 1).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[2]; $(this.api().cell(row, 2).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[3]; $(this.api().cell(row, 3).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[4]; $(this.api().cell(row, 4).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[5]; $(this.api().cell(row, 5).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[6]; $(this.api().cell(row, 6).node()).css({'font-size':'9px','padding':'1px'});\nvar value=data[7]; $(this.api().cell(row, 7).node()).css({'font-size':'9px','padding':'1px'});\n}"}},"evals":["options.rowCallback"],"jsHooks":[]}</script>
 </div>
 </div>
 <ul>
