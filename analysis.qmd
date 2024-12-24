@@ -431,7 +431,7 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
     plot.title = element_text(hjust = 0.5, face = "bold", size = 16),  
     plot.subtitle = element_text(hjust = 0.5, size = 12),  
     axis.text.x = element_text(size = 10),  
-    axis.text.y = element_text(size = 7), 
+    axis.text.y = element_text(size = 6.5), 
     legend.position = "right",  
     legend.text = element_text(size = 10),  
     legend.title = element_text(size = 12) 
