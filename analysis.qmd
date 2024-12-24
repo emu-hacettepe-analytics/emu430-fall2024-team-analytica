@@ -18,10 +18,81 @@ Sys.setlocale("LC_ALL", "Turkish")
 ## ANALYSIS OF THE DATA SET
 
 ```{r}
-data_new <- read_excel("izbb-kaza-ariza-verileri.xlsx")
+data_original <- read_excel("izbb-kaza-ariza-verileri.xlsx")
+data_new <- data_original[!is.na(data_original$ISTIKAMET), ]
+data_new$ISTIKAMET <- gsub("Alsancak|Alsancak İstikameti|Alsancak Gar|alsancak", "Alsancak", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Buca|Buca Heykel", "Buca", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Konak|Konak Tüneli|Konak İstikameti", "Konak", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Kemalpaşa|kemalpaşa|Kemalpaş", "Kemalpaşa", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Havalimanı|havalimanı", "Havalimanı", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("İnciraltı|İnciraltı İstikameti", "İnciraltı", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Üçkuyular|Üçkuyular Meydan", "Üçkuyular", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Sarnıç|Sarniç", "Sarnıç", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Fahrettin Altay|F.Altay|Fahrettin altay", "Fahrettin Altay", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Tersane|Tersanesi", "Tersane", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Otogar|Otogar Meydanı", "Otogar", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Basmane|Basmane Gar", "Basmane", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Pınarbaşı|Pınarbaşo", "Pınarbaşı", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Üçyol|üçyol|Üçyo", "Üçyol", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Karabağlar|karabağlar", "Karabağlar", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Konak|konak", "Konak", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Gündoğdu|Gündoğdu Mahallesi", "Gündoğdu", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Mahvel|Mahvel Kavşağı", "Mahvel", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Beyazevler|Beyaz Evler", "Beyazevler", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Adliye|Adliye Kavşağı", "Adliye", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Harmandalı|Harmandali", "Harmandalı", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Yıkık Kemer|Yıkıkkemer|Yıkıkker", "Yıkıkkemer", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Karşıa", "Karşıyaka", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Liman D Kapısı", "Liman", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("otogar", "Otogar", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("bornova", "Bornova", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Mai", "Mustafa Kemal Sahil", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Borsa|Borsa Kavşağı", "Borsa", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Çevre Yolu|Çevreyolu", "Çevreyolu", data_new$ISTIKAMET)
+data_new$TUR <- gsub("maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı", "Maddi Hasarlı", data_new$TUR)
+data_new$TUR <- gsub("Ölümlü|Ölümlü Kaza", "Ölümlü Kaza", data_new$TUR)
+data_new$TUR <- gsub("Yakıtı Biten", "Yakıt Bitimi", data_new$TUR)
+data_new$TUR <- gsub("Yangın", "Yanan Araç", data_new$TUR)
+data_new$TUR <- gsub("yaralanmalı Kaza", "Yaralanmalı Kaza", data_new$TUR)
+counts <- data_new %>%
+  group_by(ISTIKAMET) %>%
+  summarise(count = n())
+
+# Finding direction values with less than 5 data
+
+istikamet_to_remove <- counts %>%
+  filter(count < 5) %>%
+  pull(ISTIKAMET)
+
+# Delete them from the data set
+
+data_new <- data_new %>%
+  filter(!ISTIKAMET %in% istikamet_to_remove)
+
+data_new$GECEN_SURE <- difftime(data_new$MUDAHALE_ZAMANI, data_new$KAZA_ZAMANI, units = "mins")
+
+# Taking into account the day difference for interventions arriving after midnight
+
+data_new <- data_new %>%
+  mutate(
+    GECEN_SURE = ifelse(
+      MUDAHALE_ZAMANI < KAZA_ZAMANI, 
+      difftime(MUDAHALE_ZAMANI + days(1), KAZA_ZAMANI, units = "mins"),
+      difftime(MUDAHALE_ZAMANI, KAZA_ZAMANI, units = "mins")
+    )
+  )
+data_new <- data_new %>%
+  group_by(ISTIKAMET) %>%
+  mutate(ORTALAMA_GECEN_SURE = mean(GECEN_SURE, na.rm = TRUE))
+
+# Fill each NA value for GECEN_SURE with the average time of the direction it is connected to
+
+data_new <- data_new %>%
+  mutate(GECEN_SURE = ifelse(is.na(GECEN_SURE), ORTALAMA_GECEN_SURE, GECEN_SURE))
 data_2023 <- data_new %>%
   mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d")) %>%  # Changing date format to yyyy-mm-dd 
   filter(year(TARIH) == 2023)
+
 datatable(data_2023, 
           options = list(pageLength = 10, scrollX = TRUE), 
           caption = "Accident Data of Izmir  for the Year 2023") %>%
@@ -102,7 +173,7 @@ ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Tot
   coord_flip() +  
   labs(title = "Distribution of Accidents According to Directions (2023)", x = "Direction", y = "Frequency") +
   theme_minimal() +
-  theme(axis.text.y = element_text(size = 3))
+  theme(axis.text.y = element_text(size = 5))
 
 ```
 
@@ -271,10 +342,6 @@ datatable(accidents_date_destination,
 
 -   With the help of this code, we have grouped the accidents on the five days with the most accidents according to the date and direction and sorted each date in descending order. and again, as we expected, the first three directions on three of the five days are "Merkez", "Gaziemir", "Bornova", while the remaining two days "Merkez" and "Gaziemir" are in the first two places.
 
--   By utilizing the data we obtained, we analyzed how response times vary based on destinations and types of accidents, as well as how many accidents are distributed across destinations and time of day.
-
--   The Response Time By Destinations plot analyzes response times at different destinations, providing important information on median, average and variability.
-
 ```{r}
 library(ggplot2)
 
@@ -287,11 +354,17 @@ ggplot(data_2023, aes(x = ISTIKAMET, y = GECEN_SURE)) +
   ) +
   theme_minimal() + 
   theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
+    axis.text.x = element_text(angle = 45,size=6, hjust = 1),
     plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
     axis.text = element_text(size = 10)
   )
 ```
+
+-   By utilizing the data we obtained, we analyzed how response times vary based on destinations and types of accidents, as well as how many accidents are distributed across destinations and time of day.
+
+-   The Response Time By Destinations plot analyzes response times at different destinations, providing important information on median, average and variability.
+
+<!-- -->
 
 -   When we examine the plot, the average response time of most destinations is concentrated between 20-30 minutes, which shows general effective responses."Heykel," "Çeşme," and "Göztepe" show consistent distributions and predictable response times, demonstrating operational stability."Buca" and "Havalimanı" have wider distributions and higher averages, reflecting delays and inconsistencies."Merkez" exhibits significant variability and outliers, leading to increased average response times.
 
@@ -358,7 +431,7 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
     plot.title = element_text(hjust = 0.5, face = "bold", size = 16),  
     plot.subtitle = element_text(hjust = 0.5, size = 12),  
     axis.text.x = element_text(size = 10),  
-    axis.text.y = element_text(size = 8), 
+    axis.text.y = element_text(size = 7), 
     legend.position = "right",  
     legend.text = element_text(size = 10),  
     legend.title = element_text(size = 12) 
