@@ -643,6 +643,7 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 ```{r}
 library(ggplot2)
 library(dplyr)
+library(DT)
 
 # Cleaning missing datas
 data_2023 <- data_2023 %>%
@@ -653,10 +654,24 @@ facet_data <- data_2023 %>%
   group_by(ISTIKAMET, TUR) %>%
   summarise(count = n(), .groups = "drop")
 
-print(facet_data)
-
 # Controlling facet data
-print(facet_data)
+datatable(facet_data, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Facet Data (ISTIKAMET and TUR Distribution)") %>%
+  DT::formatStyle(
+    columns = colnames(facet_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 
 # Finding top 10 directions in terms of accidents
 top_istikamets <- facet_data %>%
@@ -673,7 +688,23 @@ print(top_istikamets)
 filtered_data <- facet_data %>% filter(ISTIKAMET %in% top_istikamets)
 
 # Checking filtered directions
-print(filtered_data)
+datatable(filtered_data, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Filtered Data for Top 10 Directions") %>%
+  DT::formatStyle(
+    columns = colnames(filtered_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 
 # Creating facet grid graph
 ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
@@ -690,7 +721,6 @@ ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
     y = "Number of Accidents",
     fill = "Type of Accidents"
   )
-
 ```
 
 -   The graph demonstrates that “Material Damage (Maddi Hasarlı)” and “Breakdown (Arızalı)” accidents are the most frequent across the analyzed directions. These types dominate the overall accident distribution.
