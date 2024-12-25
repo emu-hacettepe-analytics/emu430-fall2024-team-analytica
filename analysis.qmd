@@ -102,7 +102,7 @@ data_new <- data_new %>%
 str(data_new)
 ```
 
-**ANALYSIS OF THE DATA SET**
+# **ANALYSIS OF THE DATA SET**
 
 ```{r}
 data_2023 <- data_new %>%
