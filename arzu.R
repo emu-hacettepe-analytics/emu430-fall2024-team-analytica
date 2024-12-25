@@ -43,19 +43,20 @@ ggplot(monthly_data, aes(x = factor(month), y =Total)) +
   labs(title = "Monthly Accident Numbers ", x = "Months", y = "Number of Accidents") +
   theme_minimal()
 
+colnames(data_new)
+
+
+
 library(dplyr)
 daily_accident <- data_2023 %>%
-  group_by(tarih) %>%
+  group_by(TARIH) %>%
   summarise(daily_accident = n())
-
-head(daily_accident)
-
 daily_accident <- daily_accident %>%
-  mutate(month = format(as.Date(tarih), "%B"))
+  mutate(month = format(as.Date(TARIH), "%B"))
 
 colnames(daily_accident)
 daily_accident <- daily_accident %>%
-  mutate(Gun = as.numeric(format(as.Date(tarih), "%d")))  
+  mutate(Gun = as.numeric(format(as.Date(TARIH), "%d")))  
 
 daily_accident$month <- factor(daily_accident$month, levels = month.name)
 
@@ -63,13 +64,12 @@ library(dplyr)
 peak_points <- daily_accident %>%
   group_by(month) %>%
   filter(daily_accident == max(daily_accident, na.rm = TRUE))
-
 library(ggplot2)
 ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
   geom_line(color = "black", size = 0.5) +
   geom_point(color = "red", size = 1) +
   geom_point(data = peak_points, aes(x = Gun, y = daily_accident), 
-             color = "purple", size = 2.5) +  # Zirve noktalarını yeşil yap
+             color = "purple", size = 2.5) +  
   facet_wrap(~ month, scales = "free_y", ncol = 3) +
   labs(title = "Monthly Accident Number",
        x = "Day",
@@ -78,10 +78,15 @@ ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         strip.text = element_text(size = 10, face = "bold"))
 
+# Her ay için en az kaza sayısını bulma
+min_points <- daily_accident %>%
+  group_by(month) %>%
+  filter(daily_accident == min(daily_accident, na.rm = TRUE))
 
-# Zirve noktalarının tarihlerini listele
-peak_dates <- peak_points$tarih
+# Sonuçları kontrol et
+print(min_points)
 
-# Listeyi ekranda göster
-print(peak_dates)
+
+
+
 
