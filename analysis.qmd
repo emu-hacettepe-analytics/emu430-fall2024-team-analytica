@@ -430,6 +430,13 @@ datatable(accidents_date_destination,
 -   With the help of this code, we have grouped the accidents on the five days with the most accidents according to the date and direction and sorted each date in descending order. and again, as we expected, the first three directions on three of the five days are "Merkez", "Gaziemir", "Bornova", while the remaining two days "Merkez" and "Gaziemir" are in the first two places.
 
 ```{r}
+library(dplyr)
+data_sorted <- data_2023 %>%
+  group_by(ISTIKAMET) %>%
+  summarise(mean_gecen_sure = mean(GECEN_SURE, na.rm = TRUE)) %>%
+  arrange(desc(mean_gecen_sure))
+
+data_2023$ISTIKAMET <- factor(data_2023$ISTIKAMET, levels = data_sorted$ISTIKAMET)
 library(ggplot2)
 
 ggplot(data_2023, aes(x = ISTIKAMET, y = GECEN_SURE)) +
