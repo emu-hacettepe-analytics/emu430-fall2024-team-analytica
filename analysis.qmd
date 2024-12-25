@@ -442,7 +442,7 @@ library(dplyr)
 
 data_2023 <- data_2023 %>%
   mutate(TUR = case_when(
-    TUR %in% c("Ölümlü Kaza Kaza Kaza Kaza Kaza", "Ölümlü Kaza Kaza Kaza Kaza Kaza Kaza") ~ "Ölümlü Kaza",
+    TUR %in% c("Ölümlü Kaza Kaza", "Ölümlü Kaza Kaza Kaza Kaza Kaza", "Ölümlü Kaza Kaza Kaza Kaza Kaza Kaza") ~ "Ölümlü Kaza",
     TRUE ~ TUR  
   ))
 
