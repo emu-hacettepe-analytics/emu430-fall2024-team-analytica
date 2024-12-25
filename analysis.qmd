@@ -51,7 +51,7 @@ data_new$ISTIKAMET <- gsub("Borsa|Borsa Kavşağı", "Borsa", data_new$ISTIKAMET
 data_new$ISTIKAMET <- gsub("Çevre Yolu|Çevreyolu", "Çevreyolu", data_new$ISTIKAMET)
 
 data_new$TUR <- gsub("maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı", "Maddi Hasarlı", data_new$TUR)
-data_new$TUR <- gsub("Ölümlü|Ölümlü Kaza Kaza", "Ölümlü Kaza", data_new$TUR)
+data_new$TUR <- gsub("Ölümlü", "Ölümlü Kaza", data_new$TUR)
 data_new$TUR <- gsub("Yakıtı Biten", "Yakıt Bitimi", data_new$TUR)
 data_new$TUR <- gsub("Yangın", "Yanan Araç", data_new$TUR)
 data_new$TUR <- gsub("yaralanmalı Kaza", "Yaralanmalı Kaza", data_new$TUR)
@@ -105,6 +105,77 @@ str(data_new)
 ## ANALYSIS OF THE DATA SET
 
 ```{r}
+data_original <- read_excel("izbb-kaza-ariza-verileri.xlsx")
+data_new <- data_original[!is.na(data_original$ISTIKAMET), ]
+data_new$ISTIKAMET <- gsub("Alsancak|Alsancak İstikameti|Alsancak Gar|alsancak", "Alsancak", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Buca|Buca Heykel", "Buca", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Konak|Konak Tüneli|Konak İstikameti", "Konak", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Kemalpaşa|kemalpaşa|Kemalpaş", "Kemalpaşa", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Havalimanı|havalimanı", "Havalimanı", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("İnciraltı|İnciraltı İstikameti", "İnciraltı", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Üçkuyular|Üçkuyular Meydan", "Üçkuyular", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Sarnıç|Sarniç", "Sarnıç", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Fahrettin Altay|F.Altay|Fahrettin altay", "Fahrettin Altay", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Tersane|Tersanesi", "Tersane", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Otogar|Otogar Meydanı", "Otogar", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Basmane|Basmane Gar", "Basmane", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Pınarbaşı|Pınarbaşo", "Pınarbaşı", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Üçyol|üçyol|Üçyo", "Üçyol", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Karabağlar|karabağlar", "Karabağlar", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Konak|konak", "Konak", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Gündoğdu|Gündoğdu Mahallesi", "Gündoğdu", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Mahvel|Mahvel Kavşağı", "Mahvel", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Beyazevler|Beyaz Evler", "Beyazevler", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Adliye|Adliye Kavşağı", "Adliye", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Harmandalı|Harmandali", "Harmandalı", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Yıkık Kemer|Yıkıkkemer|Yıkıkker", "Yıkıkkemer", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Karşıa", "Karşıyaka", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Liman D Kapısı", "Liman", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("otogar", "Otogar", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("bornova", "Bornova", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Mai", "Mustafa Kemal Sahil", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Borsa|Borsa Kavşağı", "Borsa", data_new$ISTIKAMET)
+data_new$ISTIKAMET <- gsub("Çevre Yolu|Çevreyolu", "Çevreyolu", data_new$ISTIKAMET)
+data_new$TUR <- gsub("maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı", "Maddi Hasarlı", data_new$TUR)
+data_new$TUR <- gsub("Ölümlü|Ölümlü Kaza", "Ölümlü Kaza", data_new$TUR)
+data_new$TUR <- gsub("Yakıtı Biten", "Yakıt Bitimi", data_new$TUR)
+data_new$TUR <- gsub("Yangın", "Yanan Araç", data_new$TUR)
+data_new$TUR <- gsub("yaralanmalı Kaza", "Yaralanmalı Kaza", data_new$TUR)
+counts <- data_new %>%
+  group_by(ISTIKAMET) %>%
+  summarise(count = n())
+
+# Finding direction values with less than 5 data
+
+istikamet_to_remove <- counts %>%
+  filter(count < 5) %>%
+  pull(ISTIKAMET)
+
+# Delete them from the data set
+
+data_new <- data_new %>%
+  filter(!ISTIKAMET %in% istikamet_to_remove)
+
+data_new$GECEN_SURE <- difftime(data_new$MUDAHALE_ZAMANI, data_new$KAZA_ZAMANI, units = "mins")
+
+# Taking into account the day difference for interventions arriving after midnight
+
+data_new <- data_new %>%
+  mutate(
+    GECEN_SURE = ifelse(
+      MUDAHALE_ZAMANI < KAZA_ZAMANI, 
+      difftime(MUDAHALE_ZAMANI + days(1), KAZA_ZAMANI, units = "mins"),
+      difftime(MUDAHALE_ZAMANI, KAZA_ZAMANI, units = "mins")
+    )
+  )
+data_new <- data_new %>%
+  group_by(ISTIKAMET) %>%
+  mutate(ORTALAMA_GECEN_SURE = mean(GECEN_SURE, na.rm = TRUE))
+
+# Fill each NA value for GECEN_SURE with the average time of the direction it is connected to
+
+data_new <- data_new %>%
+  mutate(GECEN_SURE = ifelse(is.na(GECEN_SURE), ORTALAMA_GECEN_SURE, GECEN_SURE))
 data_2023 <- data_new %>%
   mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d")) %>%  # Changing date format to yyyy-mm-dd 
   filter(year(TARIH) == 2023)
@@ -494,24 +565,6 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
     )
 
     monthly_data <- data.frame(month = months, Total = total_values)
-
-    datatable(monthly_data, 
-              options = list(pageLength = 12, scrollX = TRUE), 
-              caption = "Monthly Distribution of Accidents (2023)") %>%
-      DT::formatStyle(
-        columns = colnames(monthly_data), 
-        fontSize = '10px'   
-      ) %>%
-      htmlwidgets::onRender(
-        "function(el, x) {
-            $(el).css({'width': '70%', 'height': '300px'});
-            $(el).find('th').css({'font-size': '10px'}); 
-            $(el).find('.dataTables_length').css({'font-size': '10px'});
-            $(el).find('.dataTables_filter').css({'font-size': '10px'});
-            $(el).find('.dataTables_paginate').css({'font-size': '10px'});
-            $(el).find('.dataTables_info').css({'font-size': '10px'});
-        }"
-      )
     ```
 
 -   Then we drew a bar chart using this data that we organized.
@@ -526,88 +579,82 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 
 -   This bar chart shows the distribution of accidents by month. While March is the month with the most accidents, April and May have more accidents than other months. The high number of accidents in spring may be due to poor weather conditions or increased travel. The number of accidents peaks in spring and early summer and gradually decreases from August to November. This may be due to the return of tourists after the holidays are over and the weather cools down again.
 
+-   Another graph is related to the daily accident numbers.
+
+    ```{r}
+    library(dplyr)
+    daily_accident <- data_2023 %>%
+      group_by(TARIH) %>%
+      summarise(daily_accident = n())
+    daily_accident <- daily_accident %>%
+      mutate(month = format(as.Date(TARIH), "%B"))
+    library(dplyr)
+    daily_accident <- daily_accident %>%
+      mutate(Gun = as.numeric(format(as.Date(TARIH), "%d")))  
+
+    daily_accident$month <- factor(
+      daily_accident$month,
+      levels = month.name
+    )
+    peak_points <- daily_accident %>%
+      group_by(month) %>%
+      filter(daily_accident == max(daily_accident, na.rm = TRUE))
+    ```
+
+-   The purpose of choosing this graph was to determine whether the number of accidents would increase or peak on special days or holidays. But the result was not quite as we expected. For example, while the date of Ramadan holiday is April 21, the day with the most accidents in that month is April 7.
+
+    ```{r}
+    library(ggplot2)
+    ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
+      geom_line(color = "black", size = 0.5) +
+      geom_point(color = "red", size = 1) +
+      geom_point(data = peak_points, aes(x = Gun, y = daily_accident), 
+                 color = "purple", size = 2.5) +  
+      facet_wrap(~ month, scales = "free_y", ncol = 3) +
+      labs(title = "Monthly Accident Number",
+           x = "Day",
+           y = "Number of Accidents") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1),
+            strip.text = element_text(size = 10, face = "bold"))
+    ```
+
 ```{r}
 library(ggplot2)
 library(dplyr)
-library(DT)
 
-# 1. Eksik veya hatalı verileri temizleyin
+# Cleaning missing datas
 data_2023 <- data_2023 %>%
   filter(!is.na(ISTIKAMET) & !is.na(TUR) & ISTIKAMET != "")
 
-# 2. Facet data oluşturun
+# Creating facet data variable
 facet_data <- data_2023 %>%
   group_by(ISTIKAMET, TUR) %>%
   summarise(count = n(), .groups = "drop")
 
-# Facet data etkileşimli tablo
-datatable(facet_data, 
-          options = list(pageLength = 10, scrollX = TRUE), 
-          caption = "Facet Data (ISTIKAMET and TUR Distribution)") %>%
-  DT::formatStyle(
-    columns = colnames(facet_data), 
-    fontSize = '10px'   
-  ) %>%
-  htmlwidgets::onRender(
-    "function(el, x) {
-        $(el).css({'width': '70%', 'height': '300px'});
-        $(el).find('th').css({'font-size': '10px'}); 
-        $(el).find('.dataTables_length').css({'font-size': '10px'});
-        $(el).find('.dataTables_filter').css({'font-size': '10px'});
-        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
-        $(el).find('.dataTables_info').css({'font-size': '10px'});
-    }"
-  )
+print(facet_data)
 
-# 3. En fazla kazanın olduğu ilk 10 istikameti belirleyin
+# Controlling facet data
+print(facet_data)
+
+# Finding top 10 directions in terms of accidents
 top_istikamets <- facet_data %>%
   group_by(ISTIKAMET) %>%
   summarise(total_count = sum(count)) %>%
   arrange(desc(total_count)) %>%
-  slice(1:10)
+  slice(1:10) %>%
+  pull(ISTIKAMET)
 
-# İlk 10 istikamet etkileşimli tablo
-datatable(top_istikamets, 
-          options = list(pageLength = 10, scrollX = TRUE), 
-          caption = "Top 10 Directions with the Most Accidents") %>%
-  DT::formatStyle(
-    columns = colnames(top_istikamets), 
-    fontSize = '10px'   
-  ) %>%
-  htmlwidgets::onRender(
-    "function(el, x) {
-        $(el).css({'width': '70%', 'height': '300px'});
-        $(el).find('th').css({'font-size': '10px'}); 
-        $(el).find('.dataTables_length').css({'font-size': '10px'});
-        $(el).find('.dataTables_filter').css({'font-size': '10px'});
-        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
-        $(el).find('.dataTables_info').css({'font-size': '10px'});
-    }"
-  )
+# Checking if the code above true
+print(top_istikamets)
 
-# 4. Sadece bu istikametleri içeren veri kümesini oluşturun
-filtered_data <- facet_data %>% filter(ISTIKAMET %in% top_istikamets$ISTIKAMET)
+# Now filtering top directions
+filtered_data <- facet_data %>% filter(ISTIKAMET %in% top_istikamets)
 
-# Filtrelenmiş veri etkileşimli tablo
-datatable(filtered_data, 
-          options = list(pageLength = 10, scrollX = TRUE), 
-          caption = "Filtered Data for Top 10 Directions") %>%
-  DT::formatStyle(
-    columns = colnames(filtered_data), 
-    fontSize = '10px'   
-  ) %>%
-  htmlwidgets::onRender(
-    "function(el, x) {
-        $(el).css({'width': '70%', 'height': '300px'});
-        $(el).find('th').css({'font-size': '10px'}); 
-        $(el).find('.dataTables_length').css({'font-size': '10px'});
-        $(el).find('.dataTables_filter').css({'font-size': '10px'});
-        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
-        $(el).find('.dataTables_info').css({'font-size': '10px'});
-    }"
-  )
+# Checking filtered directions
+print(filtered_data)
 
-# 5. Grafik oluşturma
+# Creating facet grid graph
 ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_grid(TUR ~ ., scales = "free_y") +
@@ -622,26 +669,27 @@ ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
     y = "Number of Accidents",
     fill = "Type of Accidents"
   )
+
 ```
 
 -   The graph demonstrates that “Material Damage (Maddi Hasarlı)” and “Breakdown (Arızalı)” accidents are the most frequent across the analyzed directions. These types dominate the overall accident distribution.
 
 ```{r}
 data_2023 <- data_2023 %>%
-  mutate(AY = format(TARIH, "%B"))  # Ay isimlerini çıkarma
+  mutate(AY = format(TARIH, "%B"))  #extracting months
 
-# Ay sıralamasını düzgün hale getirmek için bir faktör olarak tanımlama
+# Organizing months
 data_2023$AY <- factor(data_2023$AY, 
                        levels = c("January", "February", "March", "April", 
                                   "May", "June", "July", "August", 
                                   "September", "October", "November", "December"))
 
-# Aylık dağılımı gruplandırma
+# grouping months
 monthly_data <- data_2023 %>%
   group_by(AY, TUR) %>%
   summarise(count = n(), .groups = "drop")
 
-# Grafik oluşturma
+# Now creating facet_grid graph based on monthly distribution
 ggplot(monthly_data, aes(x = AY, y = count, fill = TUR)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_grid(TUR ~ ., scales = "free_y") +
@@ -659,43 +707,3 @@ ggplot(monthly_data, aes(x = AY, y = count, fill = TUR)) +
 ```
 
 -   The graph shows that accidents may intensify in certain seasons. For example, in the summer months (June, July, August), increased traffic density may lead to an increase in “Property Damage” or “Injury” accidents. In winter (December, January, February), worsening weather conditions may increase the number of “Chain Accidents(Zincirleme Kaza)” or “Defective Vehicle(Kusurlu Araç)” incidents.
-
-```{r}
-library(dplyr)
-
-data_2023 <- data_2023 %>%
-  mutate(TYPE_NUMBER = as.numeric(factor(TUR)))
-grouped_data_type <- data_2023 %>%
-  group_by(TUR) %>%  # Ture göre gruplama
-  summarise(Accident_Type = n())
-sorted_grouped_type_data <- grouped_data_type %>%
-  arrange(desc(Accident_Type))
-
-datatable(sorted_grouped_type_data, 
-          options = list(pageLength = 10, scrollX = TRUE), 
-          caption = "Sequential Distribution of Accident Types (2023)") %>%
-  DT::formatStyle(
-    columns = colnames(sorted_grouped_type_data), 
-    fontSize = '10px'   
-  ) %>%
-  htmlwidgets::onRender(
-    "function(el, x) {
-        $(el).css({'width': '70%', 'height': '300px'});
-        $(el).find('th').css({'font-size': '10px'}); 
-        $(el).find('.dataTables_length').css({'font-size': '10px'});
-        $(el).find('.dataTables_filter').css({'font-size': '10px'});
-        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
-        $(el).find('.dataTables_info').css({'font-size': '10px'});
-    }"
-  )
-```
-
-```{r}
-library(ggplot2)
-
-ggplot(sorted_grouped_type_data, aes(x = reorder(TUR, Accident_Type), y = Accident_Type)) +
-  geom_bar(stat = "identity", fill = "green", color = "black") +
-  coord_flip() +  
-  labs(title = "Distribution of Accidents According to Types (2023)", x = "Accident Types", y = "Frequency") +
-  theme_minimal()
-```
