@@ -623,21 +623,21 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 library(ggplot2)
 library(dplyr)
 
-# 1. Eksik veya hatalı verileri temizleyin
+# Cleaning missing datas
 data_2023 <- data_2023 %>%
   filter(!is.na(ISTIKAMET) & !is.na(TUR) & ISTIKAMET != "")
 
-# 2. Facet data oluşturun
+# Creating facet data variable
 facet_data <- data_2023 %>%
   group_by(ISTIKAMET, TUR) %>%
   summarise(count = n(), .groups = "drop")
 
 print(facet_data)
 
-# Facet data kontrol
+# Controlling facet data
 print(facet_data)
 
-# 3. En fazla kazanın olduğu ilk 10 istikameti belirleyin
+# Finding top 10 directions in terms of accidents
 top_istikamets <- facet_data %>%
   group_by(ISTIKAMET) %>%
   summarise(total_count = sum(count)) %>%
@@ -645,16 +645,16 @@ top_istikamets <- facet_data %>%
   slice(1:10) %>%
   pull(ISTIKAMET)
 
-# İlk 10 istikamet kontrol
+# Checking if the code above true
 print(top_istikamets)
 
-# 4. Sadece bu istikametleri içeren veri kümesini oluşturun
+# Now filtering top directions
 filtered_data <- facet_data %>% filter(ISTIKAMET %in% top_istikamets)
 
-# Filtrelenmiş veri kontrol
+# Checking filtered directions
 print(filtered_data)
 
-# 5. Facet Grid ile grafiği oluşturun
+# Creating facet grid graph
 ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_grid(TUR ~ ., scales = "free_y") +
@@ -676,20 +676,20 @@ ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
 
 ```{r}
 data_2023 <- data_2023 %>%
-  mutate(AY = format(TARIH, "%B"))  # Ay isimlerini çıkarma
+  mutate(AY = format(TARIH, "%B"))  #extracting months
 
-# Ay sıralamasını düzgün hale getirmek için bir faktör olarak tanımlama
+# Organizing months
 data_2023$AY <- factor(data_2023$AY, 
                        levels = c("January", "February", "March", "April", 
                                   "May", "June", "July", "August", 
                                   "September", "October", "November", "December"))
 
-# Aylık dağılımı gruplandırma
+# grouping months
 monthly_data <- data_2023 %>%
   group_by(AY, TUR) %>%
   summarise(count = n(), .groups = "drop")
 
-# Grafik oluşturma
+# Now creating facet_grid graph based on monthly distribution
 ggplot(monthly_data, aes(x = AY, y = count, fill = TUR)) +
   geom_bar(stat = "identity", position = "dodge") +
   facet_grid(TUR ~ ., scales = "free_y") +
