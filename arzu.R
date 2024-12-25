@@ -53,17 +53,23 @@ daily_accident <- data_2023 %>%
   summarise(daily_accident = n())
 daily_accident <- daily_accident %>%
   mutate(month = format(as.Date(TARIH), "%B"))
-
+library(dplyr)
 colnames(daily_accident)
+
 daily_accident <- daily_accident %>%
   mutate(Gun = as.numeric(format(as.Date(TARIH), "%d")))  
 
-daily_accident$month <- factor(daily_accident$month, levels = month.name)
+daily_accident$month <- factor(
+  daily_accident$month,
+  levels = month.name
+)
 
-library(dplyr)
+
 peak_points <- daily_accident %>%
   group_by(month) %>%
   filter(daily_accident == max(daily_accident, na.rm = TRUE))
+
+
 library(ggplot2)
 ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
   geom_line(color = "black", size = 0.5) +
@@ -85,8 +91,6 @@ min_points <- daily_accident %>%
 
 # Sonuçları kontrol et
 print(min_points)
-
-
 
 
 
