@@ -338,6 +338,23 @@ grouped_data_type <- data_2023 %>%
   summarise(Accident_Type = n())
 sorted_grouped_type_data <- grouped_data_type %>%
   arrange(desc(Accident_Type))
+datatable(sorted_grouped_type_data, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Sequential Distribution of Accident Types (2023)") %>%
+  DT::formatStyle(
+    columns = colnames(sorted_grouped_type_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
 
 library(ggplot2)
 
@@ -348,18 +365,8 @@ ggplot(sorted_grouped_type_data, aes(x = reorder(TUR, Accident_Type), y = Accide
   theme_minimal()
 
 
-# İzmir haritasını indir ve yükle
-install.packages("sf")  # Eğer yüklü değilse
-library(sf)
 
-izmir_map <- st_read("https://paintmaps.com/tr/bos-haritalar/41c/ornekler#google_vignette")
 
-# Harita üzerinde veri göstermek için (örnek: kaza noktaları)
-data <- data.frame(
-  lon = c(27.1, 28.9, 29.0),
-  lat = c(38.4, 39.9, 40.1),
-  kazalar = c(10, 15, 20)
-)
 
 library(ggplot2)
 ggplot() +
@@ -886,3 +893,411 @@ ggplot(data_2023, aes(x = TUR, y = ORTALAMA_GECEN_SURE)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     plot.title = element_text(hjust = 0.5, size = 16, face = "bold")
   )
+
+
+#orijinal
+#If the column name is 'Date' and the format is "%Y-%m-%d":
+data_new$tarih <- as.Date(data_new$TARIH, format = "%Y-%m-%d")
+
+# Filtering 2023 data:
+data_2023 <- subset(data_new, format(data_new$tarih, "%Y") == "2023")
+
+data_2023$ay <- format(as.Date(data_2023$tarih), "%m") 
+# Month information (01, 02, ...)
+
+data_2023$ay <- as.numeric(data_2023$ay)
+# Storing monthly totals in a vector
+months <- 1:12
+total_values <- c(
+  sum(data_2023$ay == "1"),
+  sum(data_2023$ay == "2"),
+  sum(data_2023$ay == "3"),
+  sum(data_2023$ay == "4"),
+  sum(data_2023$ay == "5"),
+  sum(data_2023$ay == "6"),
+  sum(data_2023$ay == "7"),
+  sum(data_2023$ay == "8"),
+  sum(data_2023$ay == "9"),
+  sum(data_2023$ay == "10"),
+  sum(data_2023$ay == "11"),
+  sum(data_2023$ay == "12")
+)
+
+monthly_data <- data.frame(month = months, Total = total_values)
+
+
+
+library(DT)
+
+# Data hazırlama
+data_new$tarih <- as.Date(data_new$TARIH, format = "%Y-%m-%d")
+
+# 2023 yılı verilerini filtreleme
+data_2023 <- subset(data_new, format(data_new$tarih, "%Y") == "2023")
+
+data_2023$ay <- format(as.Date(data_2023$tarih), "%m") # Ay bilgisi
+data_2023$ay <- as.numeric(data_2023$ay)
+
+# Aylık toplamları hesaplama
+months <- 1:12
+total_values <- c(
+  sum(data_2023$ay == 1),
+  sum(data_2023$ay == 2),
+  sum(data_2023$ay == 3),
+  sum(data_2023$ay == 4),
+  sum(data_2023$ay == 5),
+  sum(data_2023$ay == 6),
+  sum(data_2023$ay == 7),
+  sum(data_2023$ay == 8),
+  sum(data_2023$ay == 9),
+  sum(data_2023$ay == 10),
+  sum(data_2023$ay == 11),
+  sum(data_2023$ay == 12)
+)
+
+monthly_data <- data.frame(month = months, Total = total_values)
+
+# Etkileşimli tablo oluşturma
+datatable(monthly_data, 
+          options = list(pageLength = 12, scrollX = TRUE), 
+          caption = "Monthly Distribution of Accidents (2023)") %>%
+  DT::formatStyle(
+    columns = colnames(monthly_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
+
+
+#orijinal
+library(dplyr)
+daily_accident <- data_2023 %>%
+  group_by(TARIH) %>%
+  summarise(daily_accident = n())
+daily_accident <- daily_accident %>%
+  mutate(month = format(as.Date(TARIH), "%B"))
+library(dplyr)
+daily_accident <- daily_accident %>%
+  mutate(Gun = as.numeric(format(as.Date(TARIH), "%d")))  
+
+daily_accident$month <- factor(
+  daily_accident$month,
+  levels = month.name
+)
+peak_points <- daily_accident %>%
+  group_by(month) %>%
+  filter(daily_accident == max(daily_accident, na.rm = TRUE))
+
+
+library(dplyr)
+library(DT)
+
+# Günlük kaza sayısı hesaplama ve ay, gün bilgilerini ekleme
+daily_accident <- data_2023 %>%
+  group_by(TARIH) %>%
+  summarise(daily_accident = n(), .groups = "drop") %>%
+  mutate(
+    month = format(as.Date(TARIH), "%B"),
+    Gun = as.numeric(format(as.Date(TARIH), "%d"))
+  )
+
+daily_accident$month <- factor(
+  daily_accident$month,
+  levels = month.name
+)
+
+# Ay bazında zirve noktalarını bulma
+peak_points <- daily_accident %>%
+  group_by(month) %>%
+  filter(daily_accident == max(daily_accident, na.rm = TRUE))
+
+# Tablo oluşturma
+datatable(
+  peak_points,
+  options = list(
+    pageLength = 10,
+    scrollX = TRUE,
+    columnDefs = list(list(className = 'dt-center', targets = "_all"))
+  ),
+  caption = "Monthly Peak Points: Days with the Highest Number of Accidents"
+) %>%
+  DT::formatStyle(
+    columns = colnames(peak_points),
+    fontSize = '10px'
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'});
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
+
+unique(daily_accident$month)
+
+library(ggplot2)
+
+# `month` sütununun factor olarak doğru sıralandığından emin olun
+daily_accident$month <- factor(
+  daily_accident$month,
+  levels = month.name  # Ay isimlerini sıralı hale getirir
+)
+
+# Grafik
+ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
+  geom_line(color = "black", size = 0.5) +
+  geom_point(color = "red", size = 1) +
+  geom_point(data = peak_points, aes(x = Gun, y = daily_accident), 
+             color = "purple", size = 2.5) +  
+  facet_wrap(~ month, scales = "free_y", ncol = 3) +  # Facet_wrap ile her ay ayrı ayrı gösterilir
+  labs(title = "Monthly Accident Number",
+       x = "Day",
+       y = "Number of Accidents") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        strip.text = element_text(size = 10, face = "bold"))
+
+
+#tubanın yeni yaptığım
+library(ggplot2)
+library(dplyr)
+library(DT)
+
+# 1. Eksik veya hatalı verileri temizleyin
+data_2023 <- data_2023 %>%
+  filter(!is.na(ISTIKAMET) & !is.na(TUR) & ISTIKAMET != "")
+
+# 2. Facet data oluşturun
+facet_data <- data_2023 %>%
+  group_by(ISTIKAMET, TUR) %>%
+  summarise(count = n(), .groups = "drop")
+
+# Facet data etkileşimli tablo
+datatable(facet_data, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Facet Data (ISTIKAMET and TUR Distribution)") %>%
+  DT::formatStyle(
+    columns = colnames(facet_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
+
+# 3. En fazla kazanın olduğu ilk 10 istikameti belirleyin
+top_istikamets <- facet_data %>%
+  group_by(ISTIKAMET) %>%
+  summarise(total_count = sum(count)) %>%
+  arrange(desc(total_count)) %>%
+  slice(1:10)
+
+# İlk 10 istikamet etkileşimli tablo
+datatable(top_istikamets, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Top 10 Directions with the Most Accidents") %>%
+  DT::formatStyle(
+    columns = colnames(top_istikamets), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
+
+# 4. Sadece bu istikametleri içeren veri kümesini oluşturun
+filtered_data <- facet_data %>% filter(ISTIKAMET %in% top_istikamets$ISTIKAMET)
+
+# Filtrelenmiş veri etkileşimli tablo
+datatable(filtered_data, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Filtered Data for Top 10 Directions") %>%
+  DT::formatStyle(
+    columns = colnames(filtered_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
+
+# 5. Grafik oluşturma
+ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(TUR ~ ., scales = "free_y") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text.y = element_text(angle = 0, face = "bold")
+  ) +
+  labs(
+    title = "Top 10 Directions with the Most Accidents and Accident Type Distribution",
+    x = "Direction",
+    y = "Number of Accidents",
+    fill = "Type of Accidents"
+  )
+
+
+library(ggplot2)
+library(dplyr)
+library(DT)
+
+# Cleaning missing datas
+data_2023 <- data_2023 %>%
+  filter(!is.na(ISTIKAMET) & !is.na(TUR) & ISTIKAMET != "")
+
+# Creating facet data variable
+facet_data <- data_2023 %>%
+  group_by(ISTIKAMET, TUR) %>%
+  summarise(count = n(), .groups = "drop")
+
+# Controlling facet data
+datatable(facet_data, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Facet Data (ISTIKAMET and TUR Distribution)") %>%
+  DT::formatStyle(
+    columns = colnames(facet_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
+
+# Finding top 10 directions in terms of accidents
+top_istikamets <- facet_data %>%
+  group_by(ISTIKAMET) %>%
+  summarise(total_count = sum(count)) %>%
+  arrange(desc(total_count)) %>%
+  slice(1:10) %>%
+  pull(ISTIKAMET)
+
+# Checking if the code above true
+print(top_istikamets)
+
+# Now filtering top directions
+filtered_data <- facet_data %>% filter(ISTIKAMET %in% top_istikamets)
+
+# Checking filtered directions
+datatable(filtered_data, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Filtered Data for Top 10 Directions") %>%
+  DT::formatStyle(
+    columns = colnames(filtered_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
+
+# Creating facet grid graph
+ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(TUR ~ ., scales = "free_y") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text.y = element_text(angle = 0, face = "bold")
+  ) +
+  labs(
+    title = "Top 10 Directions with the Most Accidents and Accident Type Distribution",
+    x = "Direction",
+    y = "Number of Accidents",
+    fill = "Type of Accidents"
+  )
+
+
+
+#tubanın orijinal
+library(ggplot2)
+library(dplyr)
+
+# Cleaning missing datas
+data_2023 <- data_2023 %>%
+  filter(!is.na(ISTIKAMET) & !is.na(TUR) & ISTIKAMET != "")
+
+# Creating facet data variable
+facet_data <- data_2023 %>%
+  group_by(ISTIKAMET, TUR) %>%
+  summarise(count = n(), .groups = "drop")
+
+print(facet_data)
+
+# Controlling facet data
+print(facet_data)
+
+# Finding top 10 directions in terms of accidents
+top_istikamets <- facet_data %>%
+  group_by(ISTIKAMET) %>%
+  summarise(total_count = sum(count)) %>%
+  arrange(desc(total_count)) %>%
+  slice(1:10) %>%
+  pull(ISTIKAMET)
+
+# Checking if the code above true
+print(top_istikamets)
+
+# Now filtering top directions
+filtered_data <- facet_data %>% filter(ISTIKAMET %in% top_istikamets)
+
+# Checking filtered directions
+print(filtered_data)
+
+# Creating facet grid graph
+ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(TUR ~ ., scales = "free_y") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text.y = element_text(angle = 0, face = "bold")
+  ) +
+  labs(
+    title = "Top 10 Directions with the Most Accidents and Accident Type Distribution",
+    x = "Direction",
+    y = "Number of Accidents",
+    fill = "Type of Accidents"
+  )
+
