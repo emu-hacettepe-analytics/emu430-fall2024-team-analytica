@@ -264,7 +264,7 @@ sum(is.na(data_new$GECEN_SURE))
 
 -   Then, the average of the elapsed time values ​​for each direction was found and added to the data as a new column named ORTALAMA_GECEN_SURE. Then, each NA value in the GECEN_SURE column was filled with the average time of the direction it belonged to. As a result of this process, it is seen that there is no empty data left in this column.
 
-```{r}
+```{r code-fold : FALSE}
 datatable(head(data_new), options = list(
   pageLength = 10,
   dom = 't'
