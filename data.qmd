@@ -28,7 +28,7 @@ library(ggplot2)
 library(DT)           
 ```
 
-```{r, echo=TRUE, include=FALSE}
+```{r echo=TRUE, include=FALSE}
 
 # Turkish characters detection
 Sys.setlocale("LC_ALL", "Turkish")
