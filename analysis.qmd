@@ -579,6 +579,48 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 
 -   This bar chart shows the distribution of accidents by month. While March is the month with the most accidents, April and May have more accidents than other months. The high number of accidents in spring may be due to poor weather conditions or increased travel. The number of accidents peaks in spring and early summer and gradually decreases from August to November. This may be due to the return of tourists after the holidays are over and the weather cools down again.
 
+-   Another graph is related to the daily accident numbers.
+
+    ```{r}
+    library(dplyr)
+    daily_accident <- data_2023 %>%
+      group_by(TARIH) %>%
+      summarise(daily_accident = n())
+    daily_accident <- daily_accident %>%
+      mutate(month = format(as.Date(TARIH), "%B"))
+    library(dplyr)
+    colnames(daily_accident)
+
+    daily_accident <- daily_accident %>%
+      mutate(Gun = as.numeric(format(as.Date(TARIH), "%d")))  
+
+    daily_accident$month <- factor(
+      daily_accident$month,
+      levels = month.name
+    )
+    peak_points <- daily_accident %>%
+      group_by(month) %>%
+      filter(daily_accident == max(daily_accident, na.rm = TRUE))
+    ```
+
+-   The purpose of choosing this graph was to determine whether the number of accidents would increase or peak on special days or holidays. But the result was not quite as we expected. For example, while the date of Ramadan holiday is April 21, the day with the most accidents in that month is April 7.
+
+    ```{r}
+    library(ggplot2)
+    ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
+      geom_line(color = "black", size = 0.5) +
+      geom_point(color = "red", size = 1) +
+      geom_point(data = peak_points, aes(x = Gun, y = daily_accident), 
+                 color = "purple", size = 2.5) +  
+      facet_wrap(~ month, scales = "free_y", ncol = 3) +
+      labs(title = "Monthly Accident Number",
+           x = "Day",
+           y = "Number of Accidents") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1),
+            strip.text = element_text(size = 10, face = "bold"))
+    ```
+
 ```{r}
 library(ggplot2)
 library(dplyr)
@@ -632,7 +674,7 @@ ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
 
 ```
 
--   The graph demonstrates that “Material Damage (Maddi Hasarlı)” and “Breakdown (Arızalı)” accidents are the most frequent across the analyzed directions. These types dominate the overall accident distribution.
+-    The graph demonstrates that “Material Damage (Maddi Hasarlı)” and “Breakdown (Arızalı)” accidents are the most frequent across the analyzed directions. These types dominate the overall accident distribution.
 
 ```{r}
 data_2023 <- data_2023 %>%
