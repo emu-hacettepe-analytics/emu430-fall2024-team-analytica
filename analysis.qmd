@@ -571,3 +571,92 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
     ```
 
 -   This bar chart shows the distribution of accidents by month. While March is the month with the most accidents, April and May have more accidents than other months. The high number of accidents in spring may be due to poor weather conditions or increased travel. The number of accidents peaks in spring and early summer and gradually decreases from August to November. This may be due to the return of tourists after the holidays are over and the weather cools down again.
+
+```{r}
+library(ggplot2)
+library(dplyr)
+
+# 1. Eksik veya hatalı verileri temizleyin
+data_2023 <- data_2023 %>%
+  filter(!is.na(ISTIKAMET) & !is.na(TUR) & ISTIKAMET != "")
+
+# 2. Facet data oluşturun
+facet_data <- data_2023 %>%
+  group_by(ISTIKAMET, TUR) %>%
+  summarise(count = n(), .groups = "drop")
+
+print(facet_data)
+
+# Facet data kontrol
+print(facet_data)
+
+# 3. En fazla kazanın olduğu ilk 10 istikameti belirleyin
+top_istikamets <- facet_data %>%
+  group_by(ISTIKAMET) %>%
+  summarise(total_count = sum(count)) %>%
+  arrange(desc(total_count)) %>%
+  slice(1:10) %>%
+  pull(ISTIKAMET)
+
+# İlk 10 istikamet kontrol
+print(top_istikamets)
+
+# 4. Sadece bu istikametleri içeren veri kümesini oluşturun
+filtered_data <- facet_data %>% filter(ISTIKAMET %in% top_istikamets)
+
+# Filtrelenmiş veri kontrol
+print(filtered_data)
+
+# 5. Facet Grid ile grafiği oluşturun
+ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(TUR ~ ., scales = "free_y") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text.y = element_text(angle = 0, face = "bold")
+  ) +
+  labs(
+    title = "Top 10 Directions with the Most Accidents and Accident Type Distribution",
+    x = "Direction",
+    y = "Number of Accidents",
+    fill = "Type of Accidents"
+  )
+
+```
+
+-   The graph demonstrates that “Material Damage (Maddi Hasarlı)” and “Breakdown (Arızalı)” accidents are the most frequent across the analyzed directions. These types dominate the overall accident distribution.
+
+```{r}
+data_2023 <- data_2023 %>%
+  mutate(AY = format(TARIH, "%B"))  # Ay isimlerini çıkarma
+
+# Ay sıralamasını düzgün hale getirmek için bir faktör olarak tanımlama
+data_2023$AY <- factor(data_2023$AY, 
+                       levels = c("January", "February", "March", "April", 
+                                  "May", "June", "July", "August", 
+                                  "September", "October", "November", "December"))
+
+# Aylık dağılımı gruplandırma
+monthly_data <- data_2023 %>%
+  group_by(AY, TUR) %>%
+  summarise(count = n(), .groups = "drop")
+
+# Grafik oluşturma
+ggplot(monthly_data, aes(x = AY, y = count, fill = TUR)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_grid(TUR ~ ., scales = "free_y") +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text.y = element_text(angle = 0, face = "bold")
+  ) +
+  labs(
+    title = "Accident Distribution Monthly",
+    x = "Month",
+    y = "Number of Accident",
+    fill = "Type of Accident"
+  )
+```
+
+-   The graph shows that accidents may intensify in certain seasons. For example, in the summer months (June, July, August), increased traffic density may lead to an increase in “Property Damage” or “Injury” accidents. In winter (December, January, February), worsening weather conditions may increase the number of “Chain Accidents(Zincirleme Kaza)” or “Defective Vehicle(Kusurlu Araç)” incidents.
