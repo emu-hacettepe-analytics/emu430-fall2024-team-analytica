@@ -821,3 +821,68 @@ ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
     y = "Number of Accidents",
     fill = "Type of Accidents"
   )
+
+#berfinin grafiğindeki hatayı gidermeye çalışma
+library(ggplot2)
+library(dplyr)
+
+# Her bir kaza türü için en az iki veri noktası sağlamaya yönelik doldurma
+data_2023 <- data_2023 %>%
+  group_by(TUR) %>%
+  mutate(dummy = ifelse(n() < 2, TRUE, FALSE)) %>%
+  ungroup()
+
+# Eksik gruplar için bir satır ekleme (sahte veri)
+data_2023 <- data_2023 %>%
+  bind_rows(
+    data_2023 %>%
+      filter(dummy) %>%
+      mutate(ORTALAMA_GECEN_SURE = mean(data_2023$ORTALAMA_GECEN_SURE, na.rm = TRUE)) %>%
+      slice(1)
+  )
+
+# Grafik
+ggplot(data_2023, aes(x = TUR, y = ORTALAMA_GECEN_SURE)) +
+  geom_violin(fill = "lightgreen", color = "darkgreen") +
+  labs(
+    title = "Average Response Time By Accident Types",
+    x = "Accident Type",
+    y = "Average Response Time"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold")
+  )
+
+library(ggplot2)
+library(dplyr)
+
+# Her bir kaza türü için en az iki veri noktası sağlamaya yönelik doldurma
+data_2023 <- data_2023 %>%
+  group_by(TUR) %>%
+  mutate(dummy = ifelse(n() < 2, TRUE, FALSE)) %>%
+  ungroup()
+
+# Eksik gruplar için bir satır ekleme (sahte veri)
+data_2023 <- data_2023 %>%
+  bind_rows(
+    data_2023 %>%
+      filter(dummy) %>%
+      mutate(ORTALAMA_GECEN_SURE = mean(data_2023$ORTALAMA_GECEN_SURE, na.rm = TRUE)) %>%
+      slice(1)
+  )
+
+# Grafik
+ggplot(data_2023, aes(x = TUR, y = ORTALAMA_GECEN_SURE)) +
+  geom_violin(fill = "lightgreen", color = "darkgreen") +
+  labs(
+    title = "Average Response Time By Accident Types",
+    x = "Accident Type",
+    y = "Average Response Time"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold")
+  )

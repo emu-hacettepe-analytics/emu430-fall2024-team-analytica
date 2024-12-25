@@ -102,80 +102,9 @@ data_new <- data_new %>%
 str(data_new)
 ```
 
-## ANALYSIS OF THE DATA SET
+**ANALYSIS OF THE DATA SET**
 
 ```{r}
-data_original <- read_excel("izbb-kaza-ariza-verileri.xlsx")
-data_new <- data_original[!is.na(data_original$ISTIKAMET), ]
-data_new$ISTIKAMET <- gsub("Alsancak|Alsancak İstikameti|Alsancak Gar|alsancak", "Alsancak", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Buca|Buca Heykel", "Buca", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Konak|Konak Tüneli|Konak İstikameti", "Konak", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Kemalpaşa|kemalpaşa|Kemalpaş", "Kemalpaşa", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Havalimanı|havalimanı", "Havalimanı", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("İnciraltı|İnciraltı İstikameti", "İnciraltı", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Üçkuyular|Üçkuyular Meydan", "Üçkuyular", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Sarnıç|Sarniç", "Sarnıç", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Fahrettin Altay|F.Altay|Fahrettin altay", "Fahrettin Altay", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Tersane|Tersanesi", "Tersane", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Otogar|Otogar Meydanı", "Otogar", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Basmane|Basmane Gar", "Basmane", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Pınarbaşı|Pınarbaşo", "Pınarbaşı", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Üçyol|üçyol|Üçyo", "Üçyol", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Karabağlar|karabağlar", "Karabağlar", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Konak|konak", "Konak", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Gündoğdu|Gündoğdu Mahallesi", "Gündoğdu", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Mahvel|Mahvel Kavşağı", "Mahvel", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Beyazevler|Beyaz Evler", "Beyazevler", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Adliye|Adliye Kavşağı", "Adliye", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Harmandalı|Harmandali", "Harmandalı", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Yıkık Kemer|Yıkıkkemer|Yıkıkker", "Yıkıkkemer", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Karşıa", "Karşıyaka", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Liman D Kapısı", "Liman", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("otogar", "Otogar", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("bornova", "Bornova", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Mai", "Mustafa Kemal Sahil", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Borsa|Borsa Kavşağı", "Borsa", data_new$ISTIKAMET)
-data_new$ISTIKAMET <- gsub("Çevre Yolu|Çevreyolu", "Çevreyolu", data_new$ISTIKAMET)
-data_new$TUR <- gsub("maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı", "Maddi Hasarlı", data_new$TUR)
-data_new$TUR <- gsub("Ölümlü|Ölümlü Kaza", "Ölümlü Kaza", data_new$TUR)
-data_new$TUR <- gsub("Yakıtı Biten", "Yakıt Bitimi", data_new$TUR)
-data_new$TUR <- gsub("Yangın", "Yanan Araç", data_new$TUR)
-data_new$TUR <- gsub("yaralanmalı Kaza", "Yaralanmalı Kaza", data_new$TUR)
-counts <- data_new %>%
-  group_by(ISTIKAMET) %>%
-  summarise(count = n())
-
-# Finding direction values with less than 5 data
-
-istikamet_to_remove <- counts %>%
-  filter(count < 5) %>%
-  pull(ISTIKAMET)
-
-# Delete them from the data set
-
-data_new <- data_new %>%
-  filter(!ISTIKAMET %in% istikamet_to_remove)
-
-data_new$GECEN_SURE <- difftime(data_new$MUDAHALE_ZAMANI, data_new$KAZA_ZAMANI, units = "mins")
-
-# Taking into account the day difference for interventions arriving after midnight
-
-data_new <- data_new %>%
-  mutate(
-    GECEN_SURE = ifelse(
-      MUDAHALE_ZAMANI < KAZA_ZAMANI, 
-      difftime(MUDAHALE_ZAMANI + days(1), KAZA_ZAMANI, units = "mins"),
-      difftime(MUDAHALE_ZAMANI, KAZA_ZAMANI, units = "mins")
-    )
-  )
-data_new <- data_new %>%
-  group_by(ISTIKAMET) %>%
-  mutate(ORTALAMA_GECEN_SURE = mean(GECEN_SURE, na.rm = TRUE))
-
-# Fill each NA value for GECEN_SURE with the average time of the direction it is connected to
-
-data_new <- data_new %>%
-  mutate(GECEN_SURE = ifelse(is.na(GECEN_SURE), ORTALAMA_GECEN_SURE, GECEN_SURE))
 data_2023 <- data_new %>%
   mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d")) %>%  # Changing date format to yyyy-mm-dd 
   filter(year(TARIH) == 2023)
@@ -431,6 +360,49 @@ datatable(accidents_date_destination,
 
 ```{r}
 library(dplyr)
+
+data_2023 <- data_2023 %>%
+  mutate(TYPE_NUMBER = as.numeric(factor(TUR)))
+grouped_data_type <- data_2023 %>%
+  group_by(TUR) %>%  # Ture göre gruplama
+  summarise(Accident_Type = n())
+sorted_grouped_type_data <- grouped_data_type %>%
+  arrange(desc(Accident_Type))
+datatable(sorted_grouped_type_data, 
+          options = list(pageLength = 10, scrollX = TRUE), 
+          caption = "Sequential Distribution of Accident Types (2023)") %>%
+  DT::formatStyle(
+    columns = colnames(sorted_grouped_type_data), 
+    fontSize = '10px'   
+  ) %>%
+  htmlwidgets::onRender(
+    "function(el, x) {
+        $(el).css({'width': '70%', 'height': '300px'});
+        $(el).find('th').css({'font-size': '10px'}); 
+        $(el).find('.dataTables_length').css({'font-size': '10px'});
+        $(el).find('.dataTables_filter').css({'font-size': '10px'});
+        $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+        $(el).find('.dataTables_info').css({'font-size': '10px'});
+    }"
+  )
+```
+
+-   With the help of these codes, we have obtained the number of accidents according to different types.
+
+```{r}
+library(ggplot2)
+
+ggplot(sorted_grouped_type_data, aes(x = reorder(TUR, Accident_Type), y = Accident_Type)) +
+  geom_bar(stat = "identity", fill = "green", color = "black") +
+  coord_flip() +  
+  labs(title = "Distribution of Accidents According to Types (2023)", x = "Accident Types", y = "Frequency") +
+  theme_minimal()
+```
+
+-   The bar plot shows that most of accidents end up with material damage. Other major types of accidents that occur mostly are accidents with malfunction and accidents with injuries. also accidents with rolling over and being out of gas occur least.
+
+```{r}
+library(dplyr)
 data_sorted <- data_2023 %>%
   group_by(ISTIKAMET) %>%
   summarise(mean_gecen_sure = mean(GECEN_SURE, na.rm = TRUE)) %>%
@@ -537,34 +509,54 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 -   In another section, we tried to determine whether there is a relationship between the monthly accident numbers in Izmir.
 
     ```{r}
-    #If the column name is 'Date' and the format is "%Y-%m-%d":
+    library(DT)
+
+    # Data hazırlama
     data_new$tarih <- as.Date(data_new$TARIH, format = "%Y-%m-%d")
 
-    # Filtering 2023 data:
+    # 2023 yılı verilerini filtreleme
     data_2023 <- subset(data_new, format(data_new$tarih, "%Y") == "2023")
 
-    data_2023$ay <- format(as.Date(data_2023$tarih), "%m") 
-    # Month information (01, 02, ...)
-
+    data_2023$ay <- format(as.Date(data_2023$tarih), "%m") # Ay bilgisi
     data_2023$ay <- as.numeric(data_2023$ay)
-    # Storing monthly totals in a vector
+
+    # Aylık toplamları hesaplama
     months <- 1:12
     total_values <- c(
-      sum(data_2023$ay == "1"),
-      sum(data_2023$ay == "2"),
-      sum(data_2023$ay == "3"),
-      sum(data_2023$ay == "4"),
-      sum(data_2023$ay == "5"),
-      sum(data_2023$ay == "6"),
-      sum(data_2023$ay == "7"),
-      sum(data_2023$ay == "8"),
-      sum(data_2023$ay == "9"),
-      sum(data_2023$ay == "10"),
-      sum(data_2023$ay == "11"),
-      sum(data_2023$ay == "12")
+      sum(data_2023$ay == 1),
+      sum(data_2023$ay == 2),
+      sum(data_2023$ay == 3),
+      sum(data_2023$ay == 4),
+      sum(data_2023$ay == 5),
+      sum(data_2023$ay == 6),
+      sum(data_2023$ay == 7),
+      sum(data_2023$ay == 8),
+      sum(data_2023$ay == 9),
+      sum(data_2023$ay == 10),
+      sum(data_2023$ay == 11),
+      sum(data_2023$ay == 12)
     )
 
     monthly_data <- data.frame(month = months, Total = total_values)
+
+    # Etkileşimli tablo oluşturma
+    datatable(monthly_data, 
+              options = list(pageLength = 12, scrollX = TRUE), 
+              caption = "Monthly Distribution of Accidents (2023)") %>%
+      DT::formatStyle(
+        columns = colnames(monthly_data), 
+        fontSize = '10px'   
+      ) %>%
+      htmlwidgets::onRender(
+        "function(el, x) {
+            $(el).css({'width': '70%', 'height': '300px'});
+            $(el).find('th').css({'font-size': '10px'}); 
+            $(el).find('.dataTables_length').css({'font-size': '10px'});
+            $(el).find('.dataTables_filter').css({'font-size': '10px'});
+            $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+            $(el).find('.dataTables_info').css({'font-size': '10px'});
+        }"
+      )
     ```
 
 -   Then we drew a bar chart using this data that we organized.
@@ -583,22 +575,51 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 
     ```{r}
     library(dplyr)
+    library(DT)
+
+    # Günlük kaza sayısı hesaplama ve ay, gün bilgilerini ekleme
     daily_accident <- data_2023 %>%
       group_by(TARIH) %>%
-      summarise(daily_accident = n())
-    daily_accident <- daily_accident %>%
-      mutate(month = format(as.Date(TARIH), "%B"))
-    library(dplyr)
-    daily_accident <- daily_accident %>%
-      mutate(Gun = as.numeric(format(as.Date(TARIH), "%d")))  
+      summarise(daily_accident = n(), .groups = "drop") %>%
+      mutate(
+        month = format(as.Date(TARIH), "%B"),
+        Gun = as.numeric(format(as.Date(TARIH), "%d"))
+      )
 
     daily_accident$month <- factor(
       daily_accident$month,
       levels = month.name
     )
+
+    # Ay bazında zirve noktalarını bulma
     peak_points <- daily_accident %>%
       group_by(month) %>%
       filter(daily_accident == max(daily_accident, na.rm = TRUE))
+
+    # Tablo oluşturma
+    datatable(
+      peak_points,
+      options = list(
+        pageLength = 10,
+        scrollX = TRUE,
+        columnDefs = list(list(className = 'dt-center', targets = "_all"))
+      ),
+      caption = "Monthly Peak Points: Days with the Highest Number of Accidents"
+    ) %>%
+      DT::formatStyle(
+        columns = colnames(peak_points),
+        fontSize = '10px'
+      ) %>%
+      htmlwidgets::onRender(
+        "function(el, x) {
+            $(el).css({'width': '70%', 'height': '300px'});
+            $(el).find('th').css({'font-size': '10px'});
+            $(el).find('.dataTables_length').css({'font-size': '10px'});
+            $(el).find('.dataTables_filter').css({'font-size': '10px'});
+            $(el).find('.dataTables_paginate').css({'font-size': '10px'});
+            $(el).find('.dataTables_info').css({'font-size': '10px'});
+        }"
+      )
     ```
 
 -   The purpose of choosing this graph was to determine whether the number of accidents would increase or peak on special days or holidays. But the result was not quite as we expected. For example, while the date of Ramadan holiday is April 21, the day with the most accidents in that month is April 7.
