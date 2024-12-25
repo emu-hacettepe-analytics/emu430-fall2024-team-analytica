@@ -55,6 +55,17 @@ datatable(head(data_original), options = list(
 
 -   Here we see the first rows of our dataset. As stated in the table on the previous page, the columns indicate date, street, direction, location, type, accident time and intervention time, respectively.
 
+    |                 |                                              |
+    |-----------------|----------------------------------------------|
+    | **Column Name** | **Description**                              |
+    | TARIH           | Date of the accident                         |
+    | CADDE           | Street information of the accident           |
+    | ISTIKAMET       | Destination information of the accident      |
+    | KONUM           | Location information of the accident         |
+    | TUR             | Type of accident that occurred               |
+    | KAZA_ZAMANI     | Time of the accident                         |
+    | MUDAHALE_ZAMANI | Time when the vehicle was moved to safe area |
+
 ```{r}
 str(data_original)
 ```
