@@ -9,6 +9,7 @@ library(stringr)
 library(lubridate)
 library(knitr)
 library(DT)
+library(ggplot2)
 ```
 
 ```{r echo=TRUE, include=FALSE}
