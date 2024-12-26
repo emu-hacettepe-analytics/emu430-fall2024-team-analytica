@@ -282,4 +282,4 @@ datatable(head(data_new), options = list(
 save(data_new, file = "data_new.RData")
 ```
 
--   You can access the .RData format of this dataset here:
+-   You can access the .RData format of this dataset here: [data_new.RData](https://github.com/emu-hacettepe-analytics/emu430-fall2024-team-analytica/blob/c91485401b9ad90e31f5c5e483ab9f58915d2cd4/data_new.RData)

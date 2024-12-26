@@ -5,8 +5,7 @@ sidebar: false
 
 ::: {style="text-align: center;"}
 This is our project webpage.\
-Please stay tuned to follow our project activities.\
-This is our template.
+Please stay tuned to follow our project activities.
 :::
 
 ![](https://media.giphy.com/media/l378c04F2fjeZ7vH2/giphy.gif?cid=ecf05e47647ri4hmia577lfjcknd52jpofcokfgqqfguaa1c&ep=v1_gifs_related&rid=giphy.gif&ct=g){fig-align="center"}

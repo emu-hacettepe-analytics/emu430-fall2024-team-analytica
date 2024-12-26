@@ -52,6 +52,7 @@ data_new$ISTIKAMET <- gsub("Çevre Yolu|Çevreyolu", "Çevreyolu", data_new$ISTI
 
 data_new$TUR <- gsub("maddi Hasarlı|Maddi Hasarlı|MAddi Hasarlı", "Maddi Hasarlı", data_new$TUR)
 data_new$TUR <- gsub("Ölümlü", "Ölümlü Kaza", data_new$TUR)
+data_new$TUR <- gsub("Ölümlü Kaza Kaza", "Ölümlü Kaza", data_new$TUR)
 data_new$TUR <- gsub("Yakıtı Biten", "Yakıt Bitimi", data_new$TUR)
 data_new$TUR <- gsub("Yangın", "Yanan Araç", data_new$TUR)
 data_new$TUR <- gsub("yaralanmalı Kaza", "Yaralanmalı Kaza", data_new$TUR)
