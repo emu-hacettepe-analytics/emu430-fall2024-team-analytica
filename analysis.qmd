@@ -3,11 +3,12 @@ title: "Analysis"
 ---
 
 # **KEY TAKEAWAYS**
+
 -   We can see that the most accidents occur in "Merkez" ,"Bornova", "Gaziemir", "Konak" and "Çiğli".
 -   We found out which day the most accidents happened. It is "22 June of 2023".
 -   Our analysis revealed that the accident density increased in regions such as "Bornova", "Gaziemir" and "Merkez", especially during rush hour.
 -   We found that, the average response time of most destinations is concentrated between 20-30 minutes, which shows general effective responses."Heykel," "Çeşme," and "Göztepe" show consistent distributions and predictable response times, demonstrating operational stability.
--   We found that, while "March" is the month with the most accidents, "April" and "May" have more accidents than other months. The high number of accidents in spring may be due to poor weather conditions or increased travel. 
+-   We found that, while "March" is the month with the most accidents, "April" and "May" have more accidents than other months. The high number of accidents in spring may be due to poor weather conditions or increased travel.
 
 ```{r echo=TRUE, include=FALSE}
 library(readxl)
@@ -354,7 +355,7 @@ datatable(destination_accidents_top_5,
 
 -   We have collected the distribution of the five most accident days according to the directions in the data set named "destination_accidents_top_5" and sorted them in descending order.
 
-## Directions and Accidents on the 5 Dates with the Most
+## Directions and Accidents on the 5 Dates with the Most Accidents
 
 ```{r, echo=TRUE, message=FALSE, warning=FALSE}
 accidents_date_destination <- data_2023 %>%
