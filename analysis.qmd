@@ -587,8 +587,6 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
         Gun = as.numeric(format(as.Date(TARIH), "%d"))
       )
 
-
-
     # Ay bazında zirve noktalarını bulma
     peak_points <- daily_accident %>%
       group_by(month) %>%
@@ -625,7 +623,7 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
     ```{r}
     library(ggplot2)
     ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
-      geom_line(color = "black", size = 0.5) + 
+      geom_line(color = "black", linewidth = 0.5) + 
       geom_point(color = "red", size = 1) + 
       geom_point(data = peak_points, aes(x = Gun, y = daily_accident),
                  color = "purple", size = 2.5) +
