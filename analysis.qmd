@@ -724,5 +724,3 @@ ggplot(filtered_data, aes(x = ISTIKAMET, y = count, fill = TUR)) +
 ```
 
 -   The graph demonstrates that “Material Damage (Maddi Hasarlı)” and “Breakdown (Arızalı)” accidents are the most frequent across the analyzed directions. These types dominate the overall accident distribution.
-
-

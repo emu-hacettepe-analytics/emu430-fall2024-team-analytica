@@ -277,3 +277,9 @@ datatable(head(data_new), options = list(
 ```
 
 -   The dataframe named data_new, which is the result of the NA and String Processing operations, can be used for analysis studies.
+
+```{r}
+save(data_new, file = "data_new.RData")
+```
+
+-   You can access the .RData format of this dataset here:

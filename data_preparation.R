@@ -149,5 +149,5 @@ sum(is.na(data_new$GECEN_SURE))
 
 str(data_new)
 
-
+save(data_new, file = "data_new.RData")
 
