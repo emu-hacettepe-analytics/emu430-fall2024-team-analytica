@@ -639,6 +639,7 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
       theme_minimal() +
       theme(axis.text.x = element_text(angle = 45, hjust = 1),
             strip.text = element_text(size = 10, face = "bold"))
+
     ```
 
 ```{r}
