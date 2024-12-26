@@ -2,6 +2,13 @@
 title: "Analysis"
 ---
 
+# **KEY TAKEAWAYS**
+-   We can see that the most accidents occur in "Merkez" ,"Bornova", "Gaziemir", "Konak" and "Çiğli".
+-   We found out which day the most accidents happened. It is "22 June of 2023".
+-   Our analysis revealed that the accident density increased in regions such as "Bornova", "Gaziemir" and "Central", especially during rush hour.
+-   We found that, the average response time of most destinations is concentrated between 20-30 minutes, which shows general effective responses."Heykel," "Çeşme," and "Göztepe" show consistent distributions and predictable response times, demonstrating operational stability.
+-   We found that, while "March" is the month with the most accidents, "April" and "May" have more accidents than other months. The high number of accidents in spring may be due to poor weather conditions or increased travel. 
+
 ```{r echo=TRUE, include=FALSE}
 library(readxl)
 library(dplyr)
@@ -231,7 +238,7 @@ most_accidents_date <- accidents_date %>%
 most_accidents_date
 ```
 
--   We found out which day the most accidents happened.It is 22 June of 2023.
+-   We found out which day the most accidents happened. It is 22 June of 2023.
 
 ```{r}
 sorted_accidents_date <-accidents_date %>%
@@ -304,7 +311,7 @@ top_5_most_accident_dates <- accidents_date %>%
 top_5_most_accident_dates
 ```
 
--   In our studies that we have done so far, we have found that the number of accidents is usually higher in the same directions.To better understand this, we also examine the first five days with the most accidentsWith the help of this code, we learn about the five days with the most accidents.
+-   In our studies that we have done so far, we have found that the number of accidents is usually higher in the same directions.To better understand this, we also examine the first five days with the most accidents. With the help of this code, we learn about the five days with the most accidents.
 
 ```{r}
 destination_accidents_top_5 <- data_2023 %>%
@@ -358,7 +365,7 @@ datatable(accidents_date_destination,
   )
 ```
 
--   With the help of this code, we have grouped the accidents on the five days with the most accidents according to the date and direction and sorted each date in descending order. and again, as we expected, the first three directions on three of the five days are "Merkez", "Gaziemir", "Bornova", while the remaining two days "Merkez" and "Gaziemir" are in the first two places.
+-   With the help of this code, we have grouped the accidents on the five days with the most accidents according to the date and direction and sorted each date in descending order. and again, as we expected, the first three directions on three of the five days are “Merkez”, “Gaziemir”, “Bornova”. in last two days, althought places of Bornova and Gaziemir differs, merkez stays at the top.
 
 ```{r}
 library(dplyr)
@@ -389,7 +396,7 @@ datatable(sorted_grouped_type_data,
   )
 ```
 
--   With the help of these codes, we have obtained the number of accidents according to different types.
+-   With the help of these codes, we have obtained the number of accidents according to different types.
 
 ```{r}
 library(ggplot2)
@@ -401,7 +408,7 @@ ggplot(sorted_grouped_type_data, aes(x = reorder(TUR, Accident_Type), y = Accide
   theme_minimal()
 ```
 
--   The bar plot shows that most of accidents end up with material damage. Other major types of accidents that occur mostly are accidents with malfunction and accidents with injuries. also accidents with rolling over and being out of gas occur least.
+-   The bar plot shows that most of accidents end up with material damage. Other major types of accidents that occur mostly are accidents with malfunction and accidents with injuries. also accidents with rolling over and being out of gas occur least.
 
 ```{r}
 library(dplyr)
