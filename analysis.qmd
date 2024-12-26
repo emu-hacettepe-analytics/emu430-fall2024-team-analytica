@@ -113,6 +113,8 @@ str(data_new)
 
 # **ANALYSIS OF THE DATA SET**
 
+## Accident Data of İzmir for 2023
+
 ```{r}
 data_2023 <- data_new %>%
   mutate(TARIH = as.Date(TARIH, format = "%Y-%m-%d")) %>%  # Changing date format to yyyy-mm-dd 
@@ -138,6 +140,8 @@ datatable(data_2023,
 ```
 
 -   By using the "data_new" data set, we created the "data_2023".In this data set, we can see the accidents that occurred in 2023 filtered.
+
+    ## Number of Accidents by Direction (2023)
 
 ```{r}
 data_2023 <- data_2023 %>%
@@ -204,6 +208,8 @@ ggplot(sorted_grouped_data, aes(x = reorder(ISTIKAMET, Total_Accidents), y = Tot
 
 -   We have created a bar plot showing the distribution according to directions using our data set, the accident numbers of which have already been sorted to decreasing order.We can see that the most accidents occur in Merkez ,Bornova, Gaziemir, Konak and Çiğli.
 
+    ## Number of Accidents by Date (2023)
+
 ```{r}
 library(dplyr)
 accidents_date <- data_2023 %>%
@@ -230,6 +236,8 @@ datatable(accidents_date,
 
 -   We created a data set named "accidents_date" showing how many accidents happened on what date.
 
+## The Day with Most Accidents
+
 ```{r}
 library(dplyr)
 most_accidents_date <- accidents_date %>%
@@ -239,6 +247,8 @@ most_accidents_date
 ```
 
 -   We found out which day the most accidents happened. It is 22 June of 2023.
+
+## Sequential Distribution of Accidents by Date (2023)
 
 ```{r}
 sorted_accidents_date <-accidents_date %>%
@@ -263,6 +273,8 @@ datatable(sorted_accidents_date,
 ```
 
 -   We sorted these numbers in descending order and collect them in a data set named "sorted_accidents_date". Here you can also see the ten days with the most accidents.
+
+## Accidents According to the Direction of the Most Accidents
 
 ```{r}
 destination_accidents <- data_2023 %>%
@@ -302,6 +314,8 @@ ggplot(destination_accidents, aes(x = reorder(ISTIKAMET, Accident_Number), y = A
 
 -   In order to better see the distribution, we had a bar plot drawn according to the direction.As we saw in the previous bar plot, the first three directions are again "Merkez","Gaziemir" and "Bornova".
 
+## Directions on the 5 Days with the Most Accidents
+
 ```{r}
 library(dplyr)
 top_5_most_accident_dates <- accidents_date %>%
@@ -340,6 +354,8 @@ datatable(destination_accidents_top_5,
 
 -   We have collected the distribution of the five most accident days according to the directions in the data set named "destination_accidents_top_5" and sorted them in descending order.
 
+## Directions and Accidents on the 5 Dates with the Most
+
 ```{r, echo=TRUE, message=FALSE, warning=FALSE}
 accidents_date_destination <- data_2023 %>%
   filter(TARIH %in% top_5_most_accident_dates) %>%  
@@ -366,6 +382,8 @@ datatable(accidents_date_destination,
 ```
 
 -   With the help of this code, we have grouped the accidents on the five days with the most accidents according to the date and direction and sorted each date in descending order. and again, as we expected, the first three directions on three of the five days are “Merkez”, “Gaziemir”, “Bornova”. in last two days, althought places of Bornova and Gaziemir differs, merkez stays at the top.
+
+## Sequential Distribution of Accident Types (2023)
 
 ```{r}
 library(dplyr)
@@ -410,6 +428,8 @@ ggplot(sorted_grouped_type_data, aes(x = reorder(TUR, Accident_Type), y = Accide
 
 -   The bar plot shows that most of accidents end up with material damage. Other major types of accidents that occur mostly are accidents with malfunction and accidents with injuries. also accidents with rolling over and being out of gas occur least.
 
+## Response Times by Destinations
+
 ```{r}
 library(dplyr)
 data_sorted <- data_2023 %>%
@@ -439,8 +459,9 @@ ggplot(data_2023, aes(x = ISTIKAMET, y = GECEN_SURE)) +
 
 -   The Response Time By Destinations plot analyzes response times at different destinations, providing important information on median, average and variability.
 
-
 -   When we examine the plot, the average response time of most destinations is concentrated between 20-30 minutes, which shows general effective responses."Heykel," "Çeşme," and "Göztepe" show consistent distributions and predictable response times, demonstrating operational stability."Buca" and "Havalimanı" have wider distributions and higher averages, reflecting delays and inconsistencies."Merkez" exhibits significant variability and outliers, leading to increased average response times.
+
+## Average Response Time by Accident Types
 
 -   We examined the distribution of average response time according to accident types with a violin plot.
 
@@ -469,6 +490,8 @@ ggplot(data_2023, aes(x = TUR, y = ORTALAMA_GECEN_SURE)) +
 ```
 
 -   Most accident types have response times concentrated between 20–30 minutes, indicating operational efficiency. Accidents like "Arızalı," "Yakıt Bitimi," and "Patlak Lastik" show the shortest and most consistent response times, with violin plots densely concentrated at lower durations. "Ölümlü Kaza" stands out with longer response times and broader distributions, reflecting the complexity of these cases."Yaralanmalı Kaza" has the widest distribution, indicating varied response times and highlighting areas for improvement in consistency.
+
+## Accidents Throughout the Day by Destination
 
 -   We examined the distribution of accidents according to destinations during the day using a heatmap chart.
 
@@ -514,21 +537,23 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 
 -   Certain times of the day (e.g., morning and evening commute hours) show increased accident intensity in specific destinations. Destinations such as "Bornova", "Gaziemir", and "Merkez" show high accident intensity. The red zones in these areas indicate a higher number of accidents, especially during the morning and evening rush hours. Destinations such as "Tersane", "Göztepe", and "Heykel" have fewer accidents and a more evenly distributed pattern.
 
+## Monthly Distribution of Accidents (2023)
+
 -   In another section, we tried to determine whether there is a relationship between the monthly accident numbers in Izmir.
 
     ```{r}
     library(DT)
 
-    # Data hazırlama
+    # Data preparation
     data_new$tarih <- as.Date(data_new$TARIH, format = "%Y-%m-%d")
 
-    # 2023 yılı verilerini filtreleme
+    # Filtering data for 2023
     data_2023 <- subset(data_new, format(data_new$tarih, "%Y") == "2023")
 
     data_2023$ay <- format(as.Date(data_2023$tarih), "%m") # Ay bilgisi
     data_2023$ay <- as.numeric(data_2023$ay)
 
-    # Aylık toplamları hesaplama
+    # Calculating monthly totals
     months <- 1:12
     total_values <- c(
       sum(data_2023$ay == 1),
@@ -547,7 +572,6 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 
     monthly_data <- data.frame(month = months, Total = total_values)
 
-    # Etkileşimli tablo oluşturma
     datatable(monthly_data, 
               options = list(pageLength = 12, scrollX = TRUE), 
               caption = "Monthly Distribution of Accidents (2023)") %>%
@@ -579,13 +603,15 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 
 -   This bar chart shows the distribution of accidents by month. While March is the month with the most accidents, April and May have more accidents than other months. The high number of accidents in spring may be due to poor weather conditions or increased travel. The number of accidents peaks in spring and early summer and gradually decreases from August to November. This may be due to the return of tourists after the holidays are over and the weather cools down again.
 
+## Monthly Peak Points: Days with the Highest Number of Accidents
+
 -   Another graph is related to the daily accident numbers.
 
     ```{r}
     library(dplyr)
     library(DT)
 
-    # Günlük kaza sayısı hesaplama ve ay, gün bilgilerini ekleme
+    # Calculating the number of daily accidents and adding month and day information
     daily_accident <- data_2023 %>%
       group_by(TARIH) %>%
       summarise(daily_accident = n(), .groups = "drop") %>%
@@ -594,12 +620,12 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
         Gun = as.numeric(format(as.Date(TARIH), "%d"))
       )
 
-    # Ay bazında zirve noktalarını bulma
+    # Finding peaks on a monthly basis
     peak_points <- daily_accident %>%
       group_by(month) %>%
       filter(daily_accident == max(daily_accident, na.rm = TRUE))
 
-    # Tablo oluşturma
+
     datatable(
       peak_points,
       options = list(
@@ -627,6 +653,8 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 
 -   The purpose of choosing this graph was to determine whether the number of accidents would increase or peak on special days or holidays. But the result was not quite as we expected. For example, while the date of Ramadan holiday is April 21, the day with the most accidents in that month is April 7.
 
+    ## Monthly Accident Number
+
     ```{r}
     library(ggplot2)
     ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
@@ -643,6 +671,8 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
             strip.text = element_text(size = 10, face = "bold"))
 
     ```
+
+    ## Top 10 Directions with the Most Accidents and Accident Type Distribution
 
 ```{r}
 library(ggplot2)
