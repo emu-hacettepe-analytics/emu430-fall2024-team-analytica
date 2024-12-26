@@ -432,7 +432,6 @@ ggplot(data_2023, aes(x = ISTIKAMET, y = GECEN_SURE)) +
 
 -   The Response Time By Destinations plot analyzes response times at different destinations, providing important information on median, average and variability.
 
-
 -   When we examine the plot, the average response time of most destinations is concentrated between 20-30 minutes, which shows general effective responses."Heykel," "Çeşme," and "Göztepe" show consistent distributions and predictable response times, demonstrating operational stability."Buca" and "Havalimanı" have wider distributions and higher averages, reflecting delays and inconsistencies."Merkez" exhibits significant variability and outliers, leading to increased average response times.
 
 -   We examined the distribution of average response time according to accident types with a violin plot.
@@ -512,16 +511,16 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
     ```{r}
     library(DT)
 
-    # Data hazırlama
+    # Data preparation
     data_new$tarih <- as.Date(data_new$TARIH, format = "%Y-%m-%d")
 
-    # 2023 yılı verilerini filtreleme
+    # Filtering data for 2023
     data_2023 <- subset(data_new, format(data_new$tarih, "%Y") == "2023")
 
     data_2023$ay <- format(as.Date(data_2023$tarih), "%m") # Ay bilgisi
     data_2023$ay <- as.numeric(data_2023$ay)
 
-    # Aylık toplamları hesaplama
+    # Calculating monthly totals
     months <- 1:12
     total_values <- c(
       sum(data_2023$ay == 1),
@@ -540,7 +539,6 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
 
     monthly_data <- data.frame(month = months, Total = total_values)
 
-    # Etkileşimli tablo oluşturma
     datatable(monthly_data, 
               options = list(pageLength = 12, scrollX = TRUE), 
               caption = "Monthly Distribution of Accidents (2023)") %>%
@@ -578,7 +576,7 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
     library(dplyr)
     library(DT)
 
-    # Günlük kaza sayısı hesaplama ve ay, gün bilgilerini ekleme
+    # Calculating the number of daily accidents and adding month and day information
     daily_accident <- data_2023 %>%
       group_by(TARIH) %>%
       summarise(daily_accident = n(), .groups = "drop") %>%
@@ -587,12 +585,12 @@ ggplot(heatmap_data, aes(x = HOUR, y = ISTIKAMET, fill = kaza_sayisi)) +
         Gun = as.numeric(format(as.Date(TARIH), "%d"))
       )
 
-    # Ay bazında zirve noktalarını bulma
+    # Finding peaks on a monthly basis
     peak_points <- daily_accident %>%
       group_by(month) %>%
       filter(daily_accident == max(daily_accident, na.rm = TRUE))
 
-    # Tablo oluşturma
+
     datatable(
       peak_points,
       options = list(
