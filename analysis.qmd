@@ -431,7 +431,6 @@ ggplot(data_2023, aes(x = ISTIKAMET, y = GECEN_SURE)) +
 
 -   The Response Time By Destinations plot analyzes response times at different destinations, providing important information on median, average and variability.
 
-<!-- -->
 
 -   When we examine the plot, the average response time of most destinations is concentrated between 20-30 minutes, which shows general effective responses."Heykel," "Çeşme," and "Göztepe" show consistent distributions and predictable response times, demonstrating operational stability."Buca" and "Havalimanı" have wider distributions and higher averages, reflecting delays and inconsistencies."Merkez" exhibits significant variability and outliers, leading to increased average response times.
 
