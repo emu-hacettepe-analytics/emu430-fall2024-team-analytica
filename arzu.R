@@ -51,23 +51,51 @@ library(dplyr)
 daily_accident <- data_2023 %>%
   group_by(TARIH) %>%
   summarise(daily_accident = n())
+
 daily_accident <- daily_accident %>%
   mutate(month = format(as.Date(TARIH), "%B"))
-library(dplyr)
-colnames(daily_accident)
 
 daily_accident <- daily_accident %>%
   mutate(Gun = as.numeric(format(as.Date(TARIH), "%d")))  
 
-daily_accident$month <- factor(
-  daily_accident$month,
-  levels = month.name
-)
-
-
 peak_points <- daily_accident %>%
   group_by(month) %>%
   filter(daily_accident == max(daily_accident, na.rm = TRUE))
+
+daily_accident$month <- factor(daily_accident$month, 
+                               levels = c("Ocak", "Şubat", "Mart", "Nisan", "Mayıs", 
+                                          "Haziran", "Temmuz", "Ağustos", "Eylül", 
+                                          "Ekim", "Kasım", "Aralık"),
+                               ordered = TRUE)
+
+
+ggplot(daily_accident, aes(x = Gun, y = daily_accident)) +
+  geom_line(color = "black", size = 0.5) +
+  geom_point(color = "red", size = 1) +
+  geom_point(data = peak_points, aes(x = Gun, y = daily_accident),
+             color = "purple", size = 2.5) +
+  facet_wrap(~ month, scales = "free_y", ncol = 3) +
+  labs(title = "Monthly Accident Number",
+       x = "Day",
+       y = "Number of Accidents") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        strip.text = element_text(size = 10, face = "bold"))
+
+
+
+
+levels(daily_accident$month)
+
+
+
+
+
+
+
+
+
+
 
 
 library(ggplot2)
